@@ -1,0 +1,108 @@
+# Petty.
+
+## It keeps receipts.
+
+Agentless, read-only Microsoft 365 security monitoring with deterministic checks and configuration history in Git.
+
+Petty is being designed to check supported tenant configuration against approved standards, track observed changes, and preserve the evidence behind each finding.
+
+- **It's petty about details.** One misconfigured Conditional Access policy matters.
+- **It keeps receipts.** Findings reference the configuration, rule version, and evidence behind them.
+- **It holds you to standards.** Versioned, deterministic checks produce reproducible decisions.
+- **It doesn't interfere.** The monitor observes and reports without changing tenant settings.
+
+**AI proposes better checks. Petty tests them before they become the standard.**
+
+## Project status
+
+**Planning stage.** This repository currently contains the roadmap and project guidance. It does not yet contain a runnable application, live tenant collector, or production deployment.
+
+Milestone 0 is complete: the project direction and base architecture are agreed. Milestone 1 defines the product contract and threat model. We will build one milestone at a time, with reviewable changes and explicit completion gates.
+
+The first prototype will use synthetic snapshots of Conditional Access policies, protected role assignments, and the identities needed to interpret them. Coverage will be documented per resource and property. A supported resource is not a claim that Petty can export, restore, or inspect an entire tenant.
+
+## The big picture
+
+Petty answers four questions:
+
+1. What changed?
+2. Does it violate an approved policy?
+3. Which identities or resources are affected?
+4. What should happen next?
+
+```mermaid
+flowchart TD
+    Tenant[Microsoft tenant] --> Clerk[Clerk: collect and normalize]
+    Clerk --> Ledger[Ledger: versioned tenant model]
+    Ledger --> PaperTrail[Paper Trail: observed changes]
+    Ledger --> Inspector[Inspector: deterministic checks]
+    GroundRules[Ground Rules: approved baselines] --> Inspector
+    PaperTrail --> Receipts[Receipts: findings and evidence]
+    Inspector --> Receipts
+    Receipts --> Dispatch[Dispatch: read-only workflows]
+    Receipts --> Drafts[Drafts: AI proposals]
+    Drafts --> Replay[Replay: historical evaluation]
+    Replay --> Review[Human review]
+    Review --> GroundRules
+```
+
+The shared tenant model is the bookshelf. Tenant resources and relationships are the books. Clerk updates the shelf; the other modules read it.
+
+## Components
+
+| Component | Responsibility |
+| --- | --- |
+| **Clerk** | Collect and normalize configuration, recording coverage and failures. |
+| **Ledger** | Store the tenant model, relationships, fingerprints, and Git history. |
+| **Ground Rules** | Define approved policies and configuration baselines. |
+| **Paper Trail** | Identify meaningful changes and deviations from approved state. |
+| **Inspector** | Evaluate deterministic security configuration checks. |
+| **Guest List** | Review identities, memberships, and protected access. |
+| **Signals** | Correlate supported authentication and audit activity with configuration history. |
+| **Triage** | Prioritize findings using explicit criteria and, later, vulnerability context. |
+| **Receipts** | Explain findings and record evidence and decision provenance. |
+| **Dispatch** | Coordinate read-only investigation, enrichment, and configured delivery. |
+| **Drafts** | Propose improvements to checks, priorities, and workflows using AI. |
+| **Replay** | Evaluate changes against historical snapshots and regression cases. |
+
+These are modules of one application. They do not need to be separate services.
+
+## Architecture decisions
+
+- **Language:** TypeScript.
+- **Production runtime:** Node.js LTS; select and pin a supported version during scaffolding.
+- **Packaging:** Docker, with Docker Compose as the initial self-hosted deployment.
+- **Managed deployment target:** Azure Container Apps and Container Apps Jobs.
+- **Configuration evidence:** canonical structured files and Git history.
+- **Decision execution:** deterministic, versioned checks.
+- **AI:** bounded proposals and evaluation outside routine decision execution.
+
+Package management, API/UI frameworks, operational database, AI provider, and software license remain decisions to make. No application setup or run commands exist yet.
+
+## What a receipt records
+
+A finding should identify the tenant and resource, the relevant relationship path, the observed and expected values, the snapshot fingerprint and collection interval, the baseline and rule versions, and the decision and supporting evidence. Engine, schema, and reference-data versions must make historical evaluation reproducible.
+
+Collection time is an observation interval, not proof of the precise time or actor behind a tenant change. Git history can be rewritten; stronger integrity controls must follow the threat model.
+
+## Product boundaries
+
+- Tenant collection is read-only. Writing snapshots to a repository and recording Petty's own job state are separate operations.
+- Changes between observations may be missed. Approved baselines determine policy drift; yesterday's state is not automatically acceptable.
+- Incomplete or unauthorized collection means unknown coverage, not a passing check or a deleted resource.
+- Findings show policy judgments supported by evidence. A configuration change alone does not establish compromise or effective policy enforcement.
+- Real tenant snapshots belong in controlled private repositories. Public examples must be synthetic.
+- Active remediation is a separate future product decision; it is not part of the current monitor.
+
+## Project documents
+
+- [Roadmap](ROADMAP.md): milestones 0 through 43 and completion gates.
+- [Architecture](docs/ARCHITECTURE.md): module boundaries, data flow, and invariants.
+- [Initial architecture decision](docs/decisions/0001-base-architecture.md): agreed choices and open decisions.
+- [Contributing](CONTRIBUTING.md): how to work one milestone at a time.
+- [Security](SECURITY.md): reporting and data-handling guidance.
+- [Agent instructions](AGENTS.md): implementation guidance for coding agents.
+
+## License
+
+A software license has not been selected. Public visibility does not itself grant an open-source license. License selection is recorded as an open decision before distributing implementation releases.

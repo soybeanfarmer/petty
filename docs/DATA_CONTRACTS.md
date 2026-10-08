@@ -25,17 +25,17 @@ All object schemas reject unknown keys, including nested properties. Unknown sch
 
 ## Contract families
 
-| Family | Purpose |
-| --- | --- |
-| Resource | Allowlisted CA policy, active role assignment, role definition, or referenced principal. |
-| Relationship | A typed source field points to a resource, directory object, or role template; resolution is explicit. |
-| Manifest | Latest collection attempt plus the last trustworthy observation for each declared scope. |
-| Baseline | Tenant-bound, versioned approved policy with explicit approval metadata and approved ID sets. |
-| Assessment | One subject and a pass, fail, unknown, or not-applicable outcome with reason codes. |
-| Finding | Observed/expected facts describing a failing assessment. |
-| Receipt | An assessment, optional failure finding, evidence references, and pinned provenance. |
-| Snapshot | One manifest, retained resources, and relationships with matching tenant/scope/observation references. |
-| Evaluation bundle | One snapshot, optional approved baseline, and receipts whose references can be checked together. |
+| Family            | Purpose                                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| Resource          | Allowlisted CA policy, active role assignment, role definition, or referenced principal.               |
+| Relationship      | A typed source field points to a resource, directory object, or role template; resolution is explicit. |
+| Manifest          | Latest collection attempt plus the last trustworthy observation for each declared scope.               |
+| Baseline          | Tenant-bound, versioned approved policy with explicit approval metadata and approved ID sets.          |
+| Assessment        | One subject and a pass, fail, unknown, or not-applicable outcome with reason codes.                    |
+| Finding           | Observed/expected facts describing a failing assessment.                                               |
+| Receipt           | An assessment, optional failure finding, evidence references, and pinned provenance.                   |
+| Snapshot          | One manifest, retained resources, and relationships with matching tenant/scope/observation references. |
+| Evaluation bundle | One snapshot, optional approved baseline, and receipts whose references can be checked together.       |
 
 TypeScript types are inferred from schemas. No parallel hand-maintained interface model is required.
 
@@ -45,11 +45,11 @@ Tenant, principal, policy, and role-template IDs are canonical lowercase GUIDs. 
 
 Resources record tenant ID, kind, resource ID, and original observation ID. Properties are mandatory wrappers with exactly one state:
 
-| State | Meaning |
-| --- | --- |
-| `value` | The supported typed value was observed. An empty list is a known empty set. |
-| `null` | The upstream property was explicitly null. It is not an empty list or approved value. |
-| `missing` | Unavailable with a bounded reason: not returned/requested, permission denied, or unresolved reference. |
+| State         | Meaning                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `value`       | The supported typed value was observed. An empty list is a known empty set.                                                   |
+| `null`        | The upstream property was explicitly null. It is not an empty list or approved value.                                         |
+| `missing`     | Unavailable with a bounded reason: not returned/requested, permission denied, or unresolved reference.                        |
 | `unsupported` | An unknown enum, unsupported semantics, or unsupported API prevents interpretation. Raw unsupported values are not persisted. |
 
 Missing keys, extra properties, arbitrary profile blobs, and unknown values inside known enums are rejected. A collector must deliberately map unavailable/unsupported input to a wrapper; the validator does not invent one. A null/missing/unsupported field cannot serve as known evidence for a current decision. Unrelated fields can remain unavailable without invalidating a narrow state check.

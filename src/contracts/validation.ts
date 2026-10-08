@@ -18,8 +18,7 @@ export type ContractIssue = {
   message: string;
 };
 export type ValidationResult<T> =
-  | { success: true; data: T }
-  | { success: false; issues: ContractIssue[] };
+  { success: true; data: T } | { success: false; issues: ContractIssue[] };
 
 type Path = (string | number)[];
 type Report = (code: string, path: Path, message: string) => void;
@@ -39,18 +38,27 @@ const limits = {
 } as const;
 const pathsByScope = {
   "conditional-access-policies": [
-    "properties.displayName", "properties.state",
-    "properties.users.includeUsers", "properties.users.excludeUsers",
-    "properties.users.includeGroups", "properties.users.excludeGroups",
-    "properties.users.includeRoles", "properties.users.excludeRoles",
+    "properties.displayName",
+    "properties.state",
+    "properties.users.includeUsers",
+    "properties.users.excludeUsers",
+    "properties.users.includeGroups",
+    "properties.users.excludeGroups",
+    "properties.users.includeRoles",
+    "properties.users.excludeRoles",
   ],
   "role-assignments": [
-    "properties.principalId", "properties.roleDefinitionId",
-    "properties.directoryScopeId", "properties.appScopeId",
+    "properties.principalId",
+    "properties.roleDefinitionId",
+    "properties.directoryScopeId",
+    "properties.appScopeId",
   ],
   "role-definitions": [
-    "properties.templateId", "properties.displayName", "properties.isBuiltIn",
-    "properties.isEnabled", "properties.version",
+    "properties.templateId",
+    "properties.displayName",
+    "properties.isBuiltIn",
+    "properties.isEnabled",
+    "properties.version",
   ],
   principals: ["properties.principalType", "properties.displayName"],
 } as const;
@@ -84,7 +92,10 @@ function targetKey(value: { namespace: string; id: string }): string {
   return JSON.stringify([value.namespace, value.id]);
 }
 function duplicates<T>(
-  items: readonly T[], key: (item: T) => string, path: Path, report: Report,
+  items: readonly T[],
+  key: (item: T) => string,
+  path: Path,
+  report: Report,
 ): void {
   const seen = new Set<string>();
   items.forEach((item, index) => {
@@ -94,11 +105,10 @@ function duplicates<T>(
   });
 }
 function tenant(actual: string, expected: string, path: Path, report: Report): void {
-  if (actual !== expected) report("tenant-mismatch", path, "Reference crosses the tenant boundary.");
+  if (actual !== expected)
+    report("tenant-mismatch", path, "Reference crosses the tenant boundary.");
 }
-function validateInterval(
-  value: { start: string; end: string }, path: Path, report: Report,
-): void {
+function validateInterval(value: { start: string; end: string }, path: Path, report: Report): void {
   if (after(value.start, value.end)) report("chronology", path, "Collection starts after it ends.");
 }
 function resourceFields(resource: Resource): Record<string, FieldState> {
@@ -106,14 +116,17 @@ function resourceFields(resource: Resource): Record<string, FieldState> {
     return {
       "properties.displayName": resource.properties.displayName,
       "properties.state": resource.properties.state,
-      ...Object.fromEntries(Object.entries(resource.properties.users).map(([key, value]) => [
-        "properties.users." + key, value,
-      ])),
+      ...Object.fromEntries(
+        Object.entries(resource.properties.users).map(([key, value]) => [
+          "properties.users." + key,
+          value,
+        ]),
+      ),
     };
   }
-  return Object.fromEntries(Object.entries(resource.properties).map(([key, value]) => [
-    "properties." + key, value,
-  ]));
+  return Object.fromEntries(
+    Object.entries(resource.properties).map(([key, value]) => ["properties." + key, value]),
+  );
 }
 function validateResource(resource: Resource, path: Path, report: Report): void {
   if (resource.kind === "conditional-access-policy") {
@@ -123,10 +136,16 @@ function validateResource(resource: Resource, path: Path, report: Report): void 
       }
     });
   }
-  if (resource.kind === "role-assignment" &&
-      resource.properties.directoryScopeId.status === "value" &&
-      resource.properties.appScopeId.status === "value") {
-    report("scope-conflict", [...path, "properties"], "An assignment cannot declare both directory and app scopes.");
+  if (
+    resource.kind === "role-assignment" &&
+    resource.properties.directoryScopeId.status === "value" &&
+    resource.properties.appScopeId.status === "value"
+  ) {
+    report(
+      "scope-conflict",
+      [...path, "properties"],
+      "An assignment cannot declare both directory and app scopes.",
+    );
   }
 }
 function validateRelationship(edge: Relationship, path: Path, report: Report): void {
@@ -137,26 +156,32 @@ function validateRelationship(edge: Relationship, path: Path, report: Report): v
   }
   const policy = edge.kind === "policy-target";
   const principal = edge.kind === "assigned-principal";
-  const valid =
-    policy
-      ? edge.from.kind === "conditional-access-policy" &&
-        pathsByScope["conditional-access-policies"].includes(
-          edge.fieldPath as (typeof pathsByScope)["conditional-access-policies"][number],
-        ) &&
-        edge.fieldPath.startsWith("properties.users.") &&
-        (edge.fieldPath.endsWith("Roles")
-          ? edge.to.namespace === "role-template"
-          : edge.to.namespace === "directory-object")
-      : edge.from.kind === "role-assignment" &&
-        edge.fieldPath === (principal ? "properties.principalId" : "properties.roleDefinitionId") &&
-        (principal
-          ? edge.to.namespace === "directory-object"
-          : edge.to.namespace === "resource" && edge.to.kind === "role-definition");
-  if (!valid) report("relationship-type", path, "Relationship kind, field, source, and target namespace disagree.");
+  const valid = policy
+    ? edge.from.kind === "conditional-access-policy" &&
+      pathsByScope["conditional-access-policies"].includes(
+        edge.fieldPath as (typeof pathsByScope)["conditional-access-policies"][number],
+      ) &&
+      edge.fieldPath.startsWith("properties.users.") &&
+      (edge.fieldPath.endsWith("Roles")
+        ? edge.to.namespace === "role-template"
+        : edge.to.namespace === "directory-object")
+    : edge.from.kind === "role-assignment" &&
+      edge.fieldPath === (principal ? "properties.principalId" : "properties.roleDefinitionId") &&
+      (principal
+        ? edge.to.namespace === "directory-object"
+        : edge.to.namespace === "resource" && edge.to.kind === "role-definition");
+  if (!valid)
+    report(
+      "relationship-type",
+      path,
+      "Relationship kind, field, source, and target namespace disagree.",
+    );
 }
 function validateManifest(manifest: Manifest, path: Path, report: Report): void {
   duplicates(manifest.scopes, (scope) => scope.scopeId, [...path, "scopes"], report);
-  const observations = manifest.scopes.flatMap((scope) => scope.retainedObservation ? [scope.retainedObservation] : []);
+  const observations = manifest.scopes.flatMap((scope) =>
+    scope.retainedObservation ? [scope.retainedObservation] : [],
+  );
   duplicates(observations, (observation) => observation.observationId, [...path, "scopes"], report);
   manifest.scopes.forEach((scope, index) => {
     const scopePath = [...path, "scopes", index];
@@ -164,15 +189,33 @@ function validateManifest(manifest: Manifest, path: Path, report: Report): void 
     const retained = scope.retainedObservation;
     validateInterval(latest.interval, [...scopePath, "latestAttempt", "interval"], report);
     if (latest.attemptId !== manifest.attemptId) {
-      report("attempt-reference", [...scopePath, "latestAttempt", "attemptId"], "Latest scope attempt must belong to this manifest's attempt.");
+      report(
+        "attempt-reference",
+        [...scopePath, "latestAttempt", "attemptId"],
+        "Latest scope attempt must belong to this manifest's attempt.",
+      );
     }
     if (after(latest.interval.end, manifest.createdAt)) {
       report("chronology", scopePath, "Manifest predates its latest attempt.");
     }
-    duplicates(latest.errorCodes, (code) => code, [...scopePath, "latestAttempt", "errorCodes"], report);
-    if (latest.status === "complete" &&
-        (!latest.paginationComplete || latest.pagesReceived < 1 || latest.errorCodes.length > 0 || retained === null)) {
-      report("completion", scopePath, "Complete scope needs a fetched, completed listing without errors and a retained observation.");
+    duplicates(
+      latest.errorCodes,
+      (code) => code,
+      [...scopePath, "latestAttempt", "errorCodes"],
+      report,
+    );
+    if (
+      latest.status === "complete" &&
+      (!latest.paginationComplete ||
+        latest.pagesReceived < 1 ||
+        latest.errorCodes.length > 0 ||
+        retained === null)
+    ) {
+      report(
+        "completion",
+        scopePath,
+        "Complete scope needs a fetched, completed listing without errors and a retained observation.",
+      );
     }
     if (retained === null) return;
     validateInterval(retained.interval, [...scopePath, "retainedObservation", "interval"], report);
@@ -180,19 +223,47 @@ function validateManifest(manifest: Manifest, path: Path, report: Report): void 
       report("scope-limit", scopePath, "Retained scope exceeds the declared resource limit.");
     }
     if (latest.status === "complete") {
-      if (retained.attemptId !== latest.attemptId ||
-          !sameTime(retained.interval.start, latest.interval.start) ||
-          !sameTime(retained.interval.end, latest.interval.end)) {
-        report("observation-reference", scopePath, "Complete latest attempt must identify its own observation and original interval.");
+      if (
+        retained.attemptId !== latest.attemptId ||
+        !sameTime(retained.interval.start, latest.interval.start) ||
+        !sameTime(retained.interval.end, latest.interval.end)
+      ) {
+        report(
+          "observation-reference",
+          scopePath,
+          "Complete latest attempt must identify its own observation and original interval.",
+        );
       }
-    } else if (retained.attemptId === latest.attemptId || after(retained.interval.end, latest.interval.start)) {
-      report("observation-reference", scopePath, "Incomplete attempt may retain only an earlier trustworthy observation.");
+    } else if (
+      retained.attemptId === latest.attemptId ||
+      after(retained.interval.end, latest.interval.start)
+    ) {
+      report(
+        "observation-reference",
+        scopePath,
+        "Incomplete attempt may retain only an earlier trustworthy observation.",
+      );
     }
-    duplicates(retained.fieldPaths, (field) => field, [...scopePath, "retainedObservation", "fieldPaths"], report);
-    duplicates(retained.unsupportedFieldPaths, (field) => field, [...scopePath, "retainedObservation", "unsupportedFieldPaths"], report);
+    duplicates(
+      retained.fieldPaths,
+      (field) => field,
+      [...scopePath, "retainedObservation", "fieldPaths"],
+      report,
+    );
+    duplicates(
+      retained.unsupportedFieldPaths,
+      (field) => field,
+      [...scopePath, "retainedObservation", "unsupportedFieldPaths"],
+      report,
+    );
     const allowed: readonly string[] = pathsByScope[scope.scopeId];
     retained.fieldPaths.forEach((field, fieldIndex) => {
-      if (!allowed.includes(field)) report("field-allowlist", [...scopePath, "retainedObservation", "fieldPaths", fieldIndex], "Field is outside the versioned scope allowlist.");
+      if (!allowed.includes(field))
+        report(
+          "field-allowlist",
+          [...scopePath, "retainedObservation", "fieldPaths", fieldIndex],
+          "Field is outside the versioned scope allowlist.",
+        );
     });
     if (retained.unsupportedFieldPaths.some((field) => retained.fieldPaths.includes(field))) {
       report("coverage-conflict", scopePath, "A field cannot be both supported and unsupported.");
@@ -202,46 +273,122 @@ function validateManifest(manifest: Manifest, path: Path, report: Report): void 
 function validateBaseline(baseline: Baseline, path: Path, report: Report): void {
   const ca = baseline.conditionalAccess;
   if (ca) {
-    duplicates(ca.requiredPolicyIds, (id) => id, [...path, "conditionalAccess", "requiredPolicyIds"], report);
-    duplicates(ca.allowedExclusions, (approval) => approval.policyId, [...path, "conditionalAccess", "allowedExclusions"], report);
+    duplicates(
+      ca.requiredPolicyIds,
+      (id) => id,
+      [...path, "conditionalAccess", "requiredPolicyIds"],
+      report,
+    );
+    duplicates(
+      ca.allowedExclusions,
+      (approval) => approval.policyId,
+      [...path, "conditionalAccess", "allowedExclusions"],
+      report,
+    );
     ca.allowedExclusions.forEach((approval, index) => {
       for (const name of ["excludeUsers", "excludeGroups", "excludeRoles"] as const) {
-        duplicates(approval[name] ?? [], targetKey, [...path, "conditionalAccess", "allowedExclusions", index, name], report);
+        duplicates(
+          approval[name] ?? [],
+          targetKey,
+          [...path, "conditionalAccess", "allowedExclusions", index, name],
+          report,
+        );
       }
     });
   }
   if (baseline.protectedRoles) {
-    duplicates(baseline.protectedRoles, (role) => role.roleDefinitionId, [...path, "protectedRoles"], report);
-    duplicates(baseline.protectedRoles, (role) => role.templateId, [...path, "protectedRoles"], report);
+    duplicates(
+      baseline.protectedRoles,
+      (role) => role.roleDefinitionId,
+      [...path, "protectedRoles"],
+      report,
+    );
+    duplicates(
+      baseline.protectedRoles,
+      (role) => role.templateId,
+      [...path, "protectedRoles"],
+      report,
+    );
     baseline.protectedRoles.forEach((role, index) => {
-      duplicates(role.allowedPrincipalIds, (id) => id, [...path, "protectedRoles", index, "allowedPrincipalIds"], report);
+      duplicates(
+        role.allowedPrincipalIds,
+        (id) => id,
+        [...path, "protectedRoles", index, "allowedPrincipalIds"],
+        report,
+      );
     });
   }
 }
 function validateReceipt(receipt: Receipt, path: Path, report: Report): void {
-  tenant(receipt.assessment.tenantId, receipt.tenantId, [...path, "assessment", "tenantId"], report);
-  tenant(receipt.assessment.subject.tenantId, receipt.tenantId, [...path, "assessment", "subject", "tenantId"], report);
-  duplicates(receipt.assessment.reasonCodes, (reason) => reason, [...path, "assessment", "reasonCodes"], report);
+  tenant(
+    receipt.assessment.tenantId,
+    receipt.tenantId,
+    [...path, "assessment", "tenantId"],
+    report,
+  );
+  tenant(
+    receipt.assessment.subject.tenantId,
+    receipt.tenantId,
+    [...path, "assessment", "subject", "tenantId"],
+    report,
+  );
+  duplicates(
+    receipt.assessment.reasonCodes,
+    (reason) => reason,
+    [...path, "assessment", "reasonCodes"],
+    report,
+  );
   if ((receipt.assessment.outcome === "fail") !== (receipt.finding !== null)) {
-    report("finding-outcome", [...path, "finding"], "Exactly failing assessments carry a violation finding.");
+    report(
+      "finding-outcome",
+      [...path, "finding"],
+      "Exactly failing assessments carry a violation finding.",
+    );
   }
   if (receipt.finding) {
     tenant(receipt.finding.tenantId, receipt.tenantId, [...path, "finding", "tenantId"], report);
     if (receipt.finding.assessmentId !== receipt.assessment.id) {
-      report("finding-reference", [...path, "finding", "assessmentId"], "Finding must identify this receipt's assessment.");
+      report(
+        "finding-reference",
+        [...path, "finding", "assessmentId"],
+        "Finding must identify this receipt's assessment.",
+      );
     }
   }
   receipt.evidence.forEach((item, index) => {
-    tenant(item.resource.tenantId, receipt.tenantId, [...path, "evidence", index, "resource", "tenantId"], report);
+    tenant(
+      item.resource.tenantId,
+      receipt.tenantId,
+      [...path, "evidence", index, "resource", "tenantId"],
+      report,
+    );
     if (item.kind === "absence" && item.scopeId !== scopeByKind[item.resource.kind]) {
-      report("evidence-scope", [...path, "evidence", index], "Absence scope must match the referenced resource kind.");
+      report(
+        "evidence-scope",
+        [...path, "evidence", index],
+        "Absence scope must match the referenced resource kind.",
+      );
     }
   });
-  duplicates(receipt.provenance.referenceData, (artifact) => artifact.id, [...path, "provenance", "referenceData"], report);
-  if (receipt.assessment.outcome !== "unknown" &&
-      (receipt.provenance.baseline === null || receipt.evidence.length === 0 ||
-       !receipt.evidence.some((item) => resourceKey(item.resource) === resourceKey(receipt.assessment.subject)))) {
-    report("decision-inputs", path, "A current decision needs approved policy and evidence grounding its subject.");
+  duplicates(
+    receipt.provenance.referenceData,
+    (artifact) => artifact.id,
+    [...path, "provenance", "referenceData"],
+    report,
+  );
+  if (
+    receipt.assessment.outcome !== "unknown" &&
+    (receipt.provenance.baseline === null ||
+      receipt.evidence.length === 0 ||
+      !receipt.evidence.some(
+        (item) => resourceKey(item.resource) === resourceKey(receipt.assessment.subject),
+      ))
+  ) {
+    report(
+      "decision-inputs",
+      path,
+      "A current decision needs approved policy and evidence grounding its subject.",
+    );
   }
 }
 function validateSnapshot(snapshot: Snapshot, path: Path, report: Report): void {
@@ -249,40 +396,73 @@ function validateSnapshot(snapshot: Snapshot, path: Path, report: Report): void 
   validateManifest(snapshot.manifest, [...path, "manifest"], report);
   duplicates(snapshot.resources, resourceKey, [...path, "resources"], report);
   duplicates(snapshot.relationships, (edge) => edge.id, [...path, "relationships"], report);
-  const resources = new Map(snapshot.resources.map((resource) => [resourceKey(resource), resource]));
+  const resources = new Map(
+    snapshot.resources.map((resource) => [resourceKey(resource), resource]),
+  );
   const definitions = snapshot.resources.filter((resource) => resource.kind === "role-definition");
   const templates = new Map<string, Resource>();
   definitions.forEach((resource) => {
     if (resource.properties.templateId.status !== "value") return;
     if (templates.has(resource.properties.templateId.value)) {
-      report("duplicate-template", [...path, "resources"], "Role template must identify only one definition in a snapshot.");
+      report(
+        "duplicate-template",
+        [...path, "resources"],
+        "Role template must identify only one definition in a snapshot.",
+      );
     }
     templates.set(resource.properties.templateId.value, resource);
   });
-  duplicates(snapshot.relationships, (edge) => JSON.stringify([
-    resourceKey(edge.from), edge.fieldPath, targetKey(edge.to),
-    edge.to.namespace === "resource" ? edge.to.kind : null,
-  ]), [...path, "relationships"], report);
+  duplicates(
+    snapshot.relationships,
+    (edge) =>
+      JSON.stringify([
+        resourceKey(edge.from),
+        edge.fieldPath,
+        targetKey(edge.to),
+        edge.to.namespace === "resource" ? edge.to.kind : null,
+      ]),
+    [...path, "relationships"],
+    report,
+  );
   snapshot.resources.forEach((resource, index) => {
     const resourcePath = [...path, "resources", index];
     tenant(resource.tenantId, snapshot.tenantId, [...resourcePath, "tenantId"], report);
     validateResource(resource, resourcePath, report);
-    const scope = snapshot.manifest.scopes.find((entry) => entry.scopeId === scopeByKind[resource.kind]);
+    const scope = snapshot.manifest.scopes.find(
+      (entry) => entry.scopeId === scopeByKind[resource.kind],
+    );
     const observation = scope?.retainedObservation;
     if (!observation || observation.observationId !== resource.observationId) {
-      report("resource-observation", resourcePath, "Resource must belong to its scope's retained observation.");
+      report(
+        "resource-observation",
+        resourcePath,
+        "Resource must belong to its scope's retained observation.",
+      );
       return;
     }
     Object.entries(resourceFields(resource)).forEach(([field, state]) => {
-      if ((state.status === "value" || state.status === "null") && !observation.fieldPaths.includes(field)) {
-        report("field-coverage", [...resourcePath, "properties"], "Known or null field must be declared in the observation's supported paths.");
+      if (
+        (state.status === "value" || state.status === "null") &&
+        !observation.fieldPaths.includes(field)
+      ) {
+        report(
+          "field-coverage",
+          [...resourcePath, "properties"],
+          "Known or null field must be declared in the observation's supported paths.",
+        );
       }
     });
   });
   snapshot.manifest.scopes.forEach((scope, index) => {
-    const count = snapshot.resources.filter((resource) => scopeByKind[resource.kind] === scope.scopeId).length;
+    const count = snapshot.resources.filter(
+      (resource) => scopeByKind[resource.kind] === scope.scopeId,
+    ).length;
     if (count !== (scope.retainedObservation?.resourceCount ?? 0)) {
-      report("resource-count", [...path, "manifest", "scopes", index], "Retained count does not match the scope's resources.");
+      report(
+        "resource-count",
+        [...path, "manifest", "scopes", index],
+        "Retained count does not match the scope's resources.",
+      );
     }
   });
   snapshot.relationships.forEach((edge, index) => {
@@ -291,22 +471,39 @@ function validateSnapshot(snapshot: Snapshot, path: Path, report: Report): void 
     validateRelationship(edge, edgePath, report);
     const source = resources.get(resourceKey(edge.from));
     if (!source || source.observationId !== edge.observationId) {
-      report("relationship-source", edgePath, "Relationship must identify its source resource and original observation.");
+      report(
+        "relationship-source",
+        edgePath,
+        "Relationship must identify its source resource and original observation.",
+      );
       return;
     }
     const state = resourceFields(source)[edge.fieldPath];
-    const backed = state?.status === "value" &&
+    const backed =
+      state?.status === "value" &&
       (Array.isArray(state.value)
-        ? state.value.some((target: { namespace: string; id: string }) => targetKey(target) === targetKey(edge.to))
+        ? state.value.some(
+            (target: { namespace: string; id: string }) => targetKey(target) === targetKey(edge.to),
+          )
         : state.value === edge.to.id);
-    if (!backed) report("relationship-evidence", edgePath, "Relationship must be backed by a known source field.");
-    const target = edge.to.namespace === "resource"
-      ? resources.get(resourceKey(edge.to))
-      : edge.to.namespace === "directory-object"
-        ? resources.get(resourceKey({ kind: "principal", id: edge.to.id }))
-        : templates.get(edge.to.id);
+    if (!backed)
+      report(
+        "relationship-evidence",
+        edgePath,
+        "Relationship must be backed by a known source field.",
+      );
+    const target =
+      edge.to.namespace === "resource"
+        ? resources.get(resourceKey(edge.to))
+        : edge.to.namespace === "directory-object"
+          ? resources.get(resourceKey({ kind: "principal", id: edge.to.id }))
+          : templates.get(edge.to.id);
     if ((edge.resolution === "resolved") !== (target !== undefined)) {
-      report("relationship-resolution", edgePath, "Resolution must agree with target presence; unavailable targets stay unresolved.");
+      report(
+        "relationship-resolution",
+        edgePath,
+        "Resolution must agree with target presence; unavailable targets stay unresolved.",
+      );
     }
   });
 }
@@ -319,19 +516,38 @@ function validateBundle(bundle: EvaluationBundle, path: Path, report: Report): v
   }
   duplicates(bundle.receipts, (receipt) => receipt.id, [...path, "receipts"], report);
   duplicates(bundle.receipts, (receipt) => receipt.assessment.id, [...path, "receipts"], report);
-  duplicates(bundle.receipts.flatMap((receipt) => receipt.finding ? [receipt.finding] : []), (finding) => finding.id, [...path, "receipts"], report);
-  const resources = new Map(bundle.snapshot.resources.map((resource) => [resourceKey(resource), resource]));
+  duplicates(
+    bundle.receipts.flatMap((receipt) => (receipt.finding ? [receipt.finding] : [])),
+    (finding) => finding.id,
+    [...path, "receipts"],
+    report,
+  );
+  const resources = new Map(
+    bundle.snapshot.resources.map((resource) => [resourceKey(resource), resource]),
+  );
   bundle.receipts.forEach((receipt, index) => {
     const receiptPath = [...path, "receipts", index];
     tenant(receipt.tenantId, bundle.tenantId, [...receiptPath, "tenantId"], report);
     validateReceipt(receipt, receiptPath, report);
     const pins = receipt.provenance;
     if (pins.snapshotId !== bundle.snapshot.id || pins.manifestId !== bundle.snapshot.manifest.id) {
-      report("snapshot-reference", [...receiptPath, "provenance"], "Receipt must pin this snapshot and collection manifest.");
+      report(
+        "snapshot-reference",
+        [...receiptPath, "provenance"],
+        "Receipt must pin this snapshot and collection manifest.",
+      );
     }
     if (pins.baseline !== null) {
-      if (!bundle.baseline || pins.baseline.id !== bundle.baseline.id || pins.baseline.version !== bundle.baseline.version) {
-        report("baseline-reference", [...receiptPath, "provenance", "baseline"], "Pinned baseline must match the supplied approved baseline.");
+      if (
+        !bundle.baseline ||
+        pins.baseline.id !== bundle.baseline.id ||
+        pins.baseline.version !== bundle.baseline.version
+      ) {
+        report(
+          "baseline-reference",
+          [...receiptPath, "provenance", "baseline"],
+          "Pinned baseline must match the supplied approved baseline.",
+        );
       } else if (after(bundle.baseline.approval.approvedAt, pins.evaluatedAt)) {
         report("chronology", receiptPath, "Baseline approval occurs after evaluation.");
       }
@@ -342,10 +558,16 @@ function validateBundle(bundle: EvaluationBundle, path: Path, report: Report): v
     const current = receipt.assessment.outcome !== "unknown";
     receipt.evidence.forEach((item, evidenceIndex) => {
       const evidencePath = [...receiptPath, "evidence", evidenceIndex];
-      const scope = bundle.snapshot.manifest.scopes.find((entry) => entry.scopeId === scopeByKind[item.resource.kind]);
+      const scope = bundle.snapshot.manifest.scopes.find(
+        (entry) => entry.scopeId === scopeByKind[item.resource.kind],
+      );
       const observation = scope?.retainedObservation;
       if (!observation || observation.observationId !== item.observationId) {
-        report("evidence-observation", evidencePath, "Evidence must identify the resource scope's retained observation.");
+        report(
+          "evidence-observation",
+          evidencePath,
+          "Evidence must identify the resource scope's retained observation.",
+        );
         return;
       }
       if (after(observation.interval.end, pins.evaluatedAt)) {
@@ -353,20 +575,43 @@ function validateBundle(bundle: EvaluationBundle, path: Path, report: Report): v
       }
       const resource = resources.get(resourceKey(item.resource));
       if (item.kind === "absence") {
-        if (resource) report("absence-conflict", evidencePath, "Absence evidence cannot reference a present resource.");
+        if (resource)
+          report(
+            "absence-conflict",
+            evidencePath,
+            "Absence evidence cannot reference a present resource.",
+          );
       } else {
         const state = resource && resourceFields(resource)[item.fieldPath];
         if (!resource || resource.observationId !== item.observationId || !state) {
-          report("evidence-field", evidencePath, "Evidence must identify an existing field and its original observation.");
-        } else if (current && (state.status !== "value" || !observation.fieldPaths.includes(item.fieldPath))) {
-          report("unknown-evidence", evidencePath, "Missing, null, or unsupported fields cannot support a current decision.");
+          report(
+            "evidence-field",
+            evidencePath,
+            "Evidence must identify an existing field and its original observation.",
+          );
+        } else if (
+          current &&
+          (state.status !== "value" || !observation.fieldPaths.includes(item.fieldPath))
+        ) {
+          report(
+            "unknown-evidence",
+            evidencePath,
+            "Missing, null, or unsupported fields cannot support a current decision.",
+          );
         }
       }
       if (current) {
         const age = delta(pins.evaluatedAt, observation.interval.start);
-        if (scope?.latestAttempt.status !== "complete" || scope.latestAttempt.attemptId !== observation.attemptId ||
-            age.units > BigInt(pins.freshnessLimitSeconds) * age.scale) {
-          report("not-current", evidencePath, "Current decisions require the latest complete scope within its original freshness limit.");
+        if (
+          scope?.latestAttempt.status !== "complete" ||
+          scope.latestAttempt.attemptId !== observation.attemptId ||
+          age.units > BigInt(pins.freshnessLimitSeconds) * age.scale
+        ) {
+          report(
+            "not-current",
+            evidencePath,
+            "Current decisions require the latest complete scope within its original freshness limit.",
+          );
         }
       }
     });
@@ -375,7 +620,9 @@ function validateBundle(bundle: EvaluationBundle, path: Path, report: Report): v
 
 /** Structural parsing plus closed-context invariants where the contract supplies context. */
 export function validateContract<K extends ContractKind>(
-  kind: K, input: unknown, binding?: { expectedTenantId: string },
+  kind: K,
+  input: unknown,
+  binding?: { expectedTenantId: string },
 ): ValidationResult<ContractTypes[K]> {
   const parsed = contractSchemas[kind].safeParse(input);
   if (!parsed.success) {
@@ -383,13 +630,15 @@ export function validateContract<K extends ContractKind>(
       success: false,
       issues: parsed.error.issues.map((issue) => ({
         code: "structure:" + issue.code,
-        path: issue.path.map((part) => typeof part === "number" ? part : String(part)),
+        path: issue.path.map((part) => (typeof part === "number" ? part : String(part))),
         message: "Value does not match the versioned contract.",
       })),
     };
   }
   const issues: ContractIssue[] = [];
-  const report: Report = (code, path, message) => { issues.push({ code, path, message }); };
+  const report: Report = (code, path, message) => {
+    issues.push({ code, path, message });
+  };
   const value = parsed.data;
   if (binding) {
     if (!guid.safeParse(binding.expectedTenantId).success) {
@@ -399,20 +648,35 @@ export function validateContract<K extends ContractKind>(
     }
   }
   switch (kind) {
-    case "resource": validateResource(value as Resource, [], report); break;
-    case "relationship": validateRelationship(value as Relationship, [], report); break;
-    case "manifest": validateManifest(value as Manifest, [], report); break;
-    case "baseline": validateBaseline(value as Baseline, [], report); break;
+    case "resource":
+      validateResource(value as Resource, [], report);
+      break;
+    case "relationship":
+      validateRelationship(value as Relationship, [], report);
+      break;
+    case "manifest":
+      validateManifest(value as Manifest, [], report);
+      break;
+    case "baseline":
+      validateBaseline(value as Baseline, [], report);
+      break;
     case "assessment": {
       const assessment = value as ContractTypes["assessment"];
       tenant(assessment.subject.tenantId, assessment.tenantId, ["subject", "tenantId"], report);
       duplicates(assessment.reasonCodes, (reason) => reason, ["reasonCodes"], report);
       break;
     }
-    case "receipt": validateReceipt(value as Receipt, [], report); break;
-    case "snapshot": validateSnapshot(value as Snapshot, [], report); break;
-    case "evaluationBundle": validateBundle(value as EvaluationBundle, [], report); break;
-    case "finding": break;
+    case "receipt":
+      validateReceipt(value as Receipt, [], report);
+      break;
+    case "snapshot":
+      validateSnapshot(value as Snapshot, [], report);
+      break;
+    case "evaluationBundle":
+      validateBundle(value as EvaluationBundle, [], report);
+      break;
+    case "finding":
+      break;
   }
   return issues.length === 0
     ? { success: true, data: value as ContractTypes[K] }

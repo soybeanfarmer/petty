@@ -11,7 +11,7 @@ Petty contains the repository foundation and shared versioned runtime contracts.
 | TypeScript           | 7.0.2   |
 | Prettier             | 3.9.9   |
 | Node 24 declarations | 24.19.1 |
-| Zod runtime schemas | 4.6.5 |
+| Zod runtime schemas  | 4.6.5   |
 
 Install the pinned Node release with your preferred installer/version manager; it includes the pinned npm. `.node-version` is CI's runtime source, and `.nvmrc` supports compatible local managers. Exact package versions and `package-lock.json` are committed. See [ADR 0003](decisions/0003-toolchain.md).
 
@@ -31,18 +31,18 @@ Install the declared versions rather than bypassing engine checks. Keep optional
 
 ## Commands
 
-| Command                   | Purpose                                                      |
-| ------------------------- | ------------------------------------------------------------ |
-| `npm run toolchain:check` | Verify pinned Node/npm through npm's environment.            |
-| `npm run format`          | Apply Prettier to source/configuration/docs.                 |
-| `npm run format:check`    | Check formatting without writing.                            |
-| `npm run typecheck`       | Check the project without emitting files.                    |
-| `npm run build`           | Remove the fixed `dist/` directory and compile source/tests. |
-| `npm test`                | Build and run only emitted `dist/test/**/*.test.js` tests.   |
-| `npm run check`           | Run the complete validation sequence.                        |
-| `npm start -- --help`     | Run the previously built CLI.                                |
-| `npm run clean`           | Remove generated build output.                               |
-| `npm run schemas:export` | Build and export structural JSON Schema to ignored `dist/schemas/`. |
+| Command                   | Purpose                                                             |
+| ------------------------- | ------------------------------------------------------------------- |
+| `npm run toolchain:check` | Verify pinned Node/npm through npm's environment.                   |
+| `npm run format`          | Apply Prettier to source/configuration/docs.                        |
+| `npm run format:check`    | Check formatting without writing.                                   |
+| `npm run typecheck`       | Check the project without emitting files.                           |
+| `npm run build`           | Remove the fixed `dist/` directory and compile source/tests.        |
+| `npm test`                | Build and run only emitted `dist/test/**/*.test.js` tests.          |
+| `npm run check`           | Run the complete validation sequence.                               |
+| `npm start -- --help`     | Run the previously built CLI.                                       |
+| `npm run clean`           | Remove generated build output.                                      |
+| `npm run schemas:export`  | Build and export structural JSON Schema to ignored `dist/schemas/`. |
 
 Build before running `npm start` alone. Paths resolve from scripts/modules, not shell-specific cleanup commands. Source uses ESM and relative imports ending in `.js`. This is one small private package. Zod is its only runtime dependency; no bundler, database, web framework, or collector SDK is included.
 

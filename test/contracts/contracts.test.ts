@@ -1,12 +1,30 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  contractSchemas, structuralSchema, validateContract,
-  type ContractKind, type EvaluationBundle, type Manifest, type Resource,
+  contractSchemas,
+  structuralSchema,
+  validateContract,
+  type ContractKind,
+  type EvaluationBundle,
+  type Manifest,
+  type Resource,
 } from "../../src/contracts/index.js";
 import {
-  baseline, bundle, failFinding, fingerprint, incompleteScope, manifest, newerAttempt,
-  otherTenantId, policy, policyId, principalId, receipt, snapshot, templateId, tenantId,
+  baseline,
+  bundle,
+  failFinding,
+  fingerprint,
+  incompleteScope,
+  manifest,
+  newerAttempt,
+  otherTenantId,
+  policy,
+  policyId,
+  principalId,
+  receipt,
+  snapshot,
+  templateId,
+  tenantId,
 } from "./helpers.js";
 
 function accept(kind: ContractKind, input: unknown): void {
@@ -16,7 +34,11 @@ function accept(kind: ContractKind, input: unknown): void {
 function reject(kind: ContractKind, input: unknown, code?: string): void {
   const result = validateContract(kind, input, { expectedTenantId: tenantId });
   assert.equal(result.success, false);
-  if (!result.success && code) assert.ok(result.issues.some((issue) => issue.code === code), JSON.stringify(result.issues));
+  if (!result.success && code)
+    assert.ok(
+      result.issues.some((issue) => issue.code === code),
+      JSON.stringify(result.issues),
+    );
 }
 function ca(input: EvaluationBundle): Extract<Resource, { kind: "conditional-access-policy" }> {
   const resource = input.snapshot.resources[0]!;
@@ -31,9 +53,15 @@ function setPolicyStart(input: EvaluationBundle, start: string): void {
 
 test("each contract family accepts a minimal linked synthetic example", () => {
   const examples = {
-    resource: policy(), relationship: snapshot().relationships[0], manifest: manifest(),
-    baseline: baseline(), assessment: receipt().assessment, finding: failFinding(),
-    receipt: receipt(), snapshot: snapshot(), evaluationBundle: bundle(),
+    resource: policy(),
+    relationship: snapshot().relationships[0],
+    manifest: manifest(),
+    baseline: baseline(),
+    assessment: receipt().assessment,
+    finding: failFinding(),
+    receipt: receipt(),
+    snapshot: snapshot(),
+    evaluationBundle: bundle(),
   };
   for (const kind of Object.keys(contractSchemas) as ContractKind[]) accept(kind, examples[kind]);
 });
@@ -50,7 +78,10 @@ test("structural JSON Schema exports every versioned family without widening str
 });
 test("unknown versions, extra fields, and raw profile data are rejected", () => {
   reject("resource", { ...policy(), schemaVersion: "2.0.0" });
-  reject("resource", { ...policy(), properties: { ...policy().properties, credentials: "not-a-real-secret" } });
+  reject("resource", {
+    ...policy(),
+    properties: { ...policy().properties, credentials: "not-a-real-secret" },
+  });
   reject("snapshot", { ...snapshot(), rawGraphResponse: {} });
 });
 test("errors contain bounded classifications and paths without echoing rejected values", () => {
@@ -70,19 +101,29 @@ test("canonical tenant/principal GUIDs differ from opaque assignment/definition 
 });
 test("untrusted text and opaque IDs remain data, with no transformations", () => {
   const input = policy();
-  input.properties.displayName = { status: "value", value: '<script>$(Get-Content secret)</script> ../tenant' };
+  input.properties.displayName = {
+    status: "value",
+    value: "<script>$(Get-Content secret)</script> ../tenant",
+  };
   const result = validateContract("resource", input);
   assert.ok(result.success);
   if (result.success) assert.deepEqual(result.data, input);
 });
 test("value, null, missing, unsupported, and an explicit empty set remain distinct", () => {
   for (const state of [
-    { status: "value", value: [] }, { status: "null" },
+    { status: "value", value: [] },
+    { status: "null" },
     { status: "missing", reason: "permission-denied" },
     { status: "unsupported", reason: "unsupported-semantics" },
   ] as const) {
     const input = policy();
-    const candidate = { ...input, properties: { ...input.properties, users: { ...input.properties.users, excludeUsers: state } } };
+    const candidate = {
+      ...input,
+      properties: {
+        ...input.properties,
+        users: { ...input.properties.users, excludeUsers: state },
+      },
+    };
     accept("resource", candidate);
     const result = validateContract("resource", candidate);
     assert.ok(result.success);
@@ -90,7 +131,10 @@ test("value, null, missing, unsupported, and an explicit empty set remain distin
   }
 });
 test("unknown enum values must be represented explicitly as unsupported", () => {
-  reject("resource", { ...policy(), properties: { ...policy().properties, state: { status: "value", value: "future-state" } } });
+  reject("resource", {
+    ...policy(),
+    properties: { ...policy().properties, state: { status: "value", value: "future-state" } },
+  });
   const input = policy();
   input.properties.state = { status: "unsupported", reason: "unknown-enum" };
   accept("resource", input);
@@ -98,20 +142,51 @@ test("unknown enum values must be represented explicitly as unsupported", () => 
 test("CA symbolic tokens are confined to the documented user fields", () => {
   for (const id of ["All", "None", "GuestsOrExternalUsers"]) {
     const input = policy();
-    accept("resource", { ...input, properties: { ...input.properties, users: { ...input.properties.users, includeUsers: { status: "value", value: [{ namespace: "symbolic-user", id }] } } } });
+    accept("resource", {
+      ...input,
+      properties: {
+        ...input.properties,
+        users: {
+          ...input.properties.users,
+          includeUsers: { status: "value", value: [{ namespace: "symbolic-user", id }] },
+        },
+      },
+    });
   }
   const input = policy();
-  input.properties.users.excludeUsers = { status: "value", value: [{ namespace: "symbolic-user", id: "GuestsOrExternalUsers" }] };
+  input.properties.users.excludeUsers = {
+    status: "value",
+    value: [{ namespace: "symbolic-user", id: "GuestsOrExternalUsers" }],
+  };
   accept("resource", input);
-  for (const name of ["excludeUsers", "includeGroups", "excludeGroups", "includeRoles", "excludeRoles"]) {
-    reject("resource", { ...input, properties: { ...input.properties, users: { ...input.properties.users, [name]: { status: "value", value: [{ namespace: "symbolic-user", id: "All" }] } } } });
+  for (const name of [
+    "excludeUsers",
+    "includeGroups",
+    "excludeGroups",
+    "includeRoles",
+    "excludeRoles",
+  ]) {
+    reject("resource", {
+      ...input,
+      properties: {
+        ...input.properties,
+        users: {
+          ...input.properties.users,
+          [name]: { status: "value", value: [{ namespace: "symbolic-user", id: "All" }] },
+        },
+      },
+    });
   }
 });
 test("target sets and baseline approval sets reject duplicate members", () => {
   const input = policy();
-  input.properties.users.excludeUsers = { status: "value", value: [
-    { namespace: "directory-object", id: principalId }, { namespace: "directory-object", id: principalId },
-  ] };
+  input.properties.users.excludeUsers = {
+    status: "value",
+    value: [
+      { namespace: "directory-object", id: principalId },
+      { namespace: "directory-object", id: principalId },
+    ],
+  };
   reject("resource", input, "duplicate");
   const approved = baseline();
   approved.protectedRoles![0]!.allowedPrincipalIds.push(principalId);
@@ -144,10 +219,26 @@ test("a wholly self-consistent other tenant is rejected against configured tenan
 });
 test("nested resources, baselines, receipts, and relationship targets cannot cross tenants", () => {
   const candidates = [
-    () => { const input = bundle(); input.snapshot.resources[0]!.tenantId = otherTenantId; return input; },
-    () => { const input = bundle(); input.baseline!.tenantId = otherTenantId; return input; },
-    () => { const input = bundle(); input.receipts[0]!.assessment.subject.tenantId = otherTenantId; return input; },
-    () => { const input = bundle(); input.snapshot.relationships[0]!.to.tenantId = otherTenantId; return input; },
+    () => {
+      const input = bundle();
+      input.snapshot.resources[0]!.tenantId = otherTenantId;
+      return input;
+    },
+    () => {
+      const input = bundle();
+      input.baseline!.tenantId = otherTenantId;
+      return input;
+    },
+    () => {
+      const input = bundle();
+      input.receipts[0]!.assessment.subject.tenantId = otherTenantId;
+      return input;
+    },
+    () => {
+      const input = bundle();
+      input.snapshot.relationships[0]!.to.tenantId = otherTenantId;
+      return input;
+    },
   ];
   for (const candidate of candidates) reject("evaluationBundle", candidate(), "tenant-mismatch");
 });
@@ -210,24 +301,42 @@ test("role-template targeting resolves a distinct definition namespace", () => {
   const input = snapshot();
   const resource = input.resources[0]!;
   assert.ok(resource.kind === "conditional-access-policy");
-  resource.properties.users.includeRoles = { status: "value", value: [{ namespace: "role-template", id: templateId }] };
+  resource.properties.users.includeRoles = {
+    status: "value",
+    value: [{ namespace: "role-template", id: templateId }],
+  };
   input.relationships.push({
-    schemaVersion: "1.0.0", tenantId, id: "template-edge", observationId: resource.observationId,
-    kind: "policy-target", from: { tenantId, namespace: "resource", kind: resource.kind, id: resource.id },
-    to: { tenantId, namespace: "role-template", id: templateId }, fieldPath: "properties.users.includeRoles",
+    schemaVersion: "1.0.0",
+    tenantId,
+    id: "template-edge",
+    observationId: resource.observationId,
+    kind: "policy-target",
+    from: { tenantId, namespace: "resource", kind: resource.kind, id: resource.id },
+    to: { tenantId, namespace: "role-template", id: templateId },
+    fieldPath: "properties.users.includeRoles",
     resolution: "resolved",
   });
   accept("snapshot", input);
 });
 test("complete scope requires fetched pages, pagination completion, no errors, and its own observation", () => {
   const mutate: ((scope: Manifest["scopes"][number]) => void)[] = [
-    (scope) => { scope.latestAttempt.pagesReceived = 0; },
-    (scope) => { scope.latestAttempt.paginationComplete = false; },
-    (scope) => { scope.latestAttempt.errorCodes = ["timeout"]; },
-    (scope) => { scope.retainedObservation = null; },
+    (scope) => {
+      scope.latestAttempt.pagesReceived = 0;
+    },
+    (scope) => {
+      scope.latestAttempt.paginationComplete = false;
+    },
+    (scope) => {
+      scope.latestAttempt.errorCodes = ["timeout"];
+    },
+    (scope) => {
+      scope.retainedObservation = null;
+    },
   ];
   for (const change of mutate) {
-    const input = manifest(); change(input.scopes[0]!); reject("manifest", input, "completion");
+    const input = manifest();
+    change(input.scopes[0]!);
+    reject("manifest", input, "completion");
   }
   const unrelated = manifest();
   unrelated.scopes[0]!.retainedObservation!.attemptId = "unrelated";
@@ -238,7 +347,9 @@ test("initial failed collection may have no retained data, but cannot publish pa
   input.resources = [];
   input.relationships = [];
   input.manifest.scopes.forEach((scope) => {
-    incompleteScope(scope); scope.latestAttempt.attemptId = "attempt-1"; scope.retainedObservation = null;
+    incompleteScope(scope);
+    scope.latestAttempt.attemptId = "attempt-1";
+    scope.retainedObservation = null;
   });
   input.manifest.createdAt = "2026-10-08T11:12:00Z";
   accept("snapshot", input);
@@ -257,13 +368,18 @@ test("an incomplete latest attempt may retain only an earlier observation", () =
 test("chronology rejects reversed intervals including sub-millisecond differences", () => {
   const input = manifest();
   input.scopes[0]!.latestAttempt.interval = {
-    start: "2026-10-08T11:00:00.0000002Z", end: "2026-10-08T11:00:00.0000001Z",
+    start: "2026-10-08T11:00:00.0000002Z",
+    end: "2026-10-08T11:00:00.0000001Z",
   };
   reject("manifest", input, "chronology");
   reject("manifest", { ...manifest(), createdAt: "2026-10-08T10:59:00Z" }, "chronology");
 });
 test("timestamps require valid UTC dates and seconds without local offsets", () => {
-  for (const createdAt of ["2026-02-30T11:06:00Z", "2026-10-08T11:06Z", "2026-10-08T11:06:00+01:00"]) {
+  for (const createdAt of [
+    "2026-02-30T11:06:00Z",
+    "2026-10-08T11:06Z",
+    "2026-10-08T11:06:00+01:00",
+  ]) {
     reject("manifest", { ...manifest(), createdAt });
   }
 });
@@ -296,12 +412,16 @@ test("unaffected policy evidence remains usable when role or optional label scop
 });
 test("known state can support a narrow decision while unrelated targeting is unsupported", () => {
   const input = bundle();
-  ca(input).properties.users.includeUsers = { status: "unsupported", reason: "unsupported-semantics" };
+  ca(input).properties.users.includeUsers = {
+    status: "unsupported",
+    reason: "unsupported-semantics",
+  };
   accept("evaluationBundle", input);
 });
 test("missing, null, and unsupported required evidence cannot support a current decision", () => {
   for (const state of [
-    { status: "missing", reason: "not-returned" }, { status: "null" },
+    { status: "missing", reason: "not-returned" },
+    { status: "null" },
     { status: "unsupported", reason: "unknown-enum" },
   ] as const) {
     const input = bundle();
@@ -315,11 +435,16 @@ test("absence is represented by completed scope evidence rather than a fake reso
   const input = bundle();
   const r = input.receipts[0]!;
   r.assessment.subject.id = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
-  r.assessment.outcome = "fail"; r.finding = failFinding();
-  r.evidence = [{
-    kind: "absence", resource: r.assessment.subject, scopeId: "conditional-access-policies",
-    observationId: "observation-policies",
-  }];
+  r.assessment.outcome = "fail";
+  r.finding = failFinding();
+  r.evidence = [
+    {
+      kind: "absence",
+      resource: r.assessment.subject,
+      scopeId: "conditional-access-policies",
+      observationId: "observation-policies",
+    },
+  ];
   accept("evaluationBundle", input);
   r.evidence[0]!.resource.id = policyId;
   reject("evaluationBundle", input, "absence-conflict");
@@ -328,8 +453,16 @@ test("absence evidence from an incomplete or stale listing cannot support a fail
   const input = bundle();
   const r = input.receipts[0]!;
   r.assessment.subject.id = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
-  r.assessment.outcome = "fail"; r.finding = failFinding();
-  r.evidence = [{ kind: "absence", resource: r.assessment.subject, scopeId: "conditional-access-policies", observationId: "observation-policies" }];
+  r.assessment.outcome = "fail";
+  r.finding = failFinding();
+  r.evidence = [
+    {
+      kind: "absence",
+      resource: r.assessment.subject,
+      scopeId: "conditional-access-policies",
+      observationId: "observation-policies",
+    },
+  ];
   newerAttempt(input.snapshot, "conditional-access-policies");
   reject("evaluationBundle", input, "not-current");
 });
@@ -353,11 +486,19 @@ test("finding presence and assessment linkage agree with failure outcomes", () =
 });
 test("receipts pin the supplied snapshot, manifest, baseline ID, and baseline version", () => {
   for (const change of [
-    (input: EvaluationBundle) => { input.receipts[0]!.provenance.snapshotId = "other-snapshot"; },
-    (input: EvaluationBundle) => { input.receipts[0]!.provenance.manifestId = "other-manifest"; },
-    (input: EvaluationBundle) => { input.receipts[0]!.provenance.baseline!.version = "2"; },
+    (input: EvaluationBundle) => {
+      input.receipts[0]!.provenance.snapshotId = "other-snapshot";
+    },
+    (input: EvaluationBundle) => {
+      input.receipts[0]!.provenance.manifestId = "other-manifest";
+    },
+    (input: EvaluationBundle) => {
+      input.receipts[0]!.provenance.baseline!.version = "2";
+    },
   ]) {
-    const input = bundle(); change(input); reject("evaluationBundle", input);
+    const input = bundle();
+    change(input);
+    reject("evaluationBundle", input);
   }
 });
 test("evaluation cannot predate evidence, manifest, or approved policy", () => {
@@ -376,8 +517,14 @@ test("mixed-age dependencies each retain their own freshness requirement", () =>
   accept("evaluationBundle", input);
   input.receipts[0]!.evidence.push({
     kind: "resource-field",
-    resource: { tenantId, namespace: "resource", kind: "role-definition", id: "role-definition/opaque-001" },
-    observationId: "observation-definitions", fieldPath: "properties.templateId",
+    resource: {
+      tenantId,
+      namespace: "resource",
+      kind: "role-definition",
+      id: "role-definition/opaque-001",
+    },
+    observationId: "observation-definitions",
+    fieldPath: "properties.templateId",
   });
   reject("evaluationBundle", input, "not-current");
 });
@@ -391,6 +538,9 @@ test("fingerprints are format-checked assertions until canonicalization is imple
 test("contract validation is deterministic and does not mutate caller input", () => {
   const input = bundle();
   const before = structuredClone(input);
-  assert.deepEqual(validateContract("evaluationBundle", input), validateContract("evaluationBundle", before));
+  assert.deepEqual(
+    validateContract("evaluationBundle", input),
+    validateContract("evaluationBundle", before),
+  );
   assert.deepEqual(input, before);
 });

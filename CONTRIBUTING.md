@@ -48,4 +48,4 @@ Follow [SECURITY.md](SECURITY.md). Public issues and PRs are not the place for e
 
 ## License
 
-Software license selection is pending. Resolve it before publishing implementation releases or adding third-party material whose redistribution terms affect the project.
+Petty is licensed under [MIT](LICENSE). Preserve applicable notices and review redistribution terms before adding third-party material.

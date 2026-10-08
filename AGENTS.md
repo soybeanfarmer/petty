@@ -4,9 +4,9 @@
 
 Petty is a documentation-stage project. The accepted base architecture is TypeScript on Node.js LTS, packaged with Docker; Docker Compose is the initial self-hosted target, and Azure Container Apps/Jobs are the later managed target.
 
-No package manager, database, API/UI framework, test runner, AI provider, exact runtime version, or software license has been selected. Do not treat examples from conversation or proposed architecture as accepted implementation choices.
+The source-code license is MIT. No package manager, database, API/UI framework, test runner, AI provider, or exact runtime version has been selected. Do not treat examples from conversation or proposed architecture as accepted implementation choices.
 
-Read README.md, ROADMAP.md, docs/ARCHITECTURE.md, and relevant records in docs/decisions/ before changing the project.
+Read README.md, ROADMAP.md, docs/ARCHITECTURE.md, docs/PRODUCT_CONTRACT.md, docs/COVERAGE.md, docs/THREAT_MODEL.md, and relevant records in docs/decisions/ before changing the project. M01 establishes design requirements; future controls and acceptance cases are not implemented tests.
 
 ## Scope and workflow
 

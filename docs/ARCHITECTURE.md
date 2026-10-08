@@ -6,7 +6,7 @@ This document records the intended architecture. No application components have 
 
 Petty is one modular TypeScript application, initially executed on Node.js LTS and packaged in Docker. The first release targets a single organization's self-hosted monitor. Azure Container Apps and Container Apps Jobs are the later managed deployment target.
 
-The first resource scope will be defined in milestone M01. It is expected to focus on Conditional Access configuration, protected role assignments, and referenced identities. All coverage claims must identify supported resources and properties.
+M01 defines the first scope in the [product contract](PRODUCT_CONTRACT.md) and [coverage matrix](COVERAGE.md): selected Conditional Access state/targeting, active directory role assignments and built-in definitions, and referenced principals. Initial checks do not expand memberships or simulate effective access. All coverage claims must identify supported resources and properties. The [threat model](THREAT_MODEL.md) and [acceptance cases](ACCEPTANCE_CASES.md) define later verification requirements.
 
 ## Module relationships
 
@@ -121,4 +121,4 @@ Managed identities, secret references, durable state, retry-safe execution, and 
 
 ## Deferred decisions
 
-See [ADR 0001](decisions/0001-base-architecture.md) for agreed and open choices. Active remediation is a separate optional product boundary in M43.
+See [ADR 0001](decisions/0001-base-architecture.md) for the base architecture and [ADR 0002](decisions/0002-initial-product-contract.md) for the initial scope and MIT license. Active remediation is a separate optional product boundary in M43.

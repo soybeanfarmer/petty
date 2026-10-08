@@ -11,14 +11,14 @@ This is the agreed path from an empty repository to a production-grade monitor a
 - Keep the product within its documented support scope. Production readiness does not require every Microsoft resource or every future feature.
 - Define measurable operating and recovery targets before assessing production readiness.
 
-**Status key:** complete, pending. Only milestone 0 is complete. This document is a plan, not evidence that the described capabilities exist.
+**Status key:** complete, pending. Milestones 0 and 1 are complete. This document is a plan, not evidence that the described capabilities exist.
 
 ## Foundation and offline prototype
 
 | ID | Milestone | Completion gate | Status |
 | --- | --- | --- | --- |
 | M00 | Architecture agreed | TypeScript, Node.js LTS, Docker, Git history, deterministic checks, and read-only tenant access are agreed. | Complete |
-| M01 | Product contract and threat model | Define supported resources/properties, data ownership, collection frequency, expected tenant size, deployment assumptions, security boundaries, and the meaning of a finding. | Pending |
+| M01 | Product contract and threat model | Define supported resources/properties, data ownership, collection frequency, expected tenant size, deployment assumptions, security boundaries, and the meaning of a finding. | Complete |
 | M02 | Repository foundation | Reproducible installation, strict TypeScript checks, formatting, tests, CI, and contribution process. Pin supported tooling and dependencies. | Pending |
 | M03 | Shared data contracts | Versioned schemas for resources, relationships, collection manifests, baselines, findings, and receipts. | Pending |
 | M04 | Synthetic tenant fixtures | Small datasets demonstrate compliant settings, risky changes, missing permissions, partial collection, and malformed input. | Pending |
@@ -101,7 +101,16 @@ Each expansion passes the same evidence, security, collection-integrity, and ope
 
 ## Milestone 1 deliverables
 
-Before implementing the application, agree and document:
+Completed documentation (design requirements, not tested application behavior):
+
+- [Product contract](docs/PRODUCT_CONTRACT.md)
+- [Resource/property coverage](docs/COVERAGE.md)
+- [Threat model](docs/THREAT_MODEL.md)
+- [Acceptance cases and completion evidence](docs/ACCEPTANCE_CASES.md)
+- [ADR 0002: initial product contract](docs/decisions/0002-initial-product-contract.md)
+- [MIT license](LICENSE), selected by the repository owner
+
+The following deliverables are documented:
 
 1. Initial resource/property coverage for Conditional Access and protected role assignments, including referenced identities.
 2. The initial operator and ownership model: one organization in a self-hosted deployment.
@@ -109,8 +118,10 @@ Before implementing the application, agree and document:
 4. Collection interval, expected scale, staleness handling, and the initial test environment.
 5. Initial security checks and the policy decisions they represent.
 6. Credential/permission strategy and explicit handling of missing access.
-7. Remaining tool selections and the software license.
+7. Explicitly deferred tool selections and the selected MIT software license.
 8. Acceptance examples for compliant, noncompliant, unknown, and out-of-scope data.
+
+M01 validation covers internal links, document structure, all eight deliverables, roadmap status consistency, and independent scope/threat review against primary API documentation. Acceptance cases are specifications; no application tests, live API probes, or CI exist yet. M02 is the next implementation milestone.
 
 ## References
 

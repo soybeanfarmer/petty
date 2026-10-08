@@ -29,6 +29,8 @@ The monitor's read-only tenant permissions do not remove the need to protect ide
 
 ## Production security work
 
-The roadmap includes threat modelling, authorization, credential handling, tenant isolation, recovery exercises, dependency integrity, operating limits, and incident procedures.
+The [M01 threat model](docs/THREAT_MODEL.md) records initial assets, trust boundaries, risks, and implementation gates. The [product contract](docs/PRODUCT_CONTRACT.md) defines ownership, retention, freshness, and recovery targets. These are requirements, not proof that safeguards already work.
+
+The roadmap includes authorization, credential handling, tenant isolation, recovery exercises, dependency integrity, operating limits, and incident procedures.
 
 Before production use, document supported scope, least-privilege permissions, disclosure channels, secret rotation, retention/deletion behavior, and recovery targets. Active tenant remediation requires a separate product decision and execution boundary.

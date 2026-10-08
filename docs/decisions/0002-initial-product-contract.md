@@ -17,7 +17,7 @@ Implement three narrow policy checks: required CA state, approved explicit exclu
 
 Adopt the [product contract](../PRODUCT_CONTRACT.md) as initial design targets: hourly scans, 20-minute attempt deadline, 120-minute per-scope freshness limit, declared scale envelope, owner-managed Git retention, and pilot recovery objectives. These targets require later measurement and implementation proof.
 
-Use the [MIT license](../../LICENSE) for source distribution. Authentication/permission candidates require live validation in M12; exact tooling and database/framework choices remain deferred to their roadmap milestones.
+Use the [MIT license](../../LICENSE) for source distribution. Authentication/permission candidates require live validation in M12; [ADR 0003](0003-toolchain.md) resolves M02 tooling; database/framework choices remain deferred to their roadmap milestones.
 
 ## Alternatives considered
 

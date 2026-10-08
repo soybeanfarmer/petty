@@ -1,6 +1,6 @@
 # Contributing to Petty
 
-Petty is at the planning stage. Start with [the roadmap](ROADMAP.md) and [architecture](docs/ARCHITECTURE.md) before proposing implementation.
+Petty has a repository foundation; tenant monitoring is not implemented yet. Start with [the roadmap](ROADMAP.md) and [architecture](docs/ARCHITECTURE.md) before proposing implementation.
 
 ## Work one milestone at a time
 
@@ -24,11 +24,16 @@ Larger milestones may require multiple PRs. Do not expand a documentation or con
 
 ## Development setup
 
-Application scaffolding, package management, and executable scripts do not exist yet. M02 will establish installation, type checking, formatting, test, build, and container commands.
+Follow [development instructions](docs/DEVELOPMENT.md) to install pinned Node/npm and run:
 
-Until then, documentation contributions should verify relative links, milestone IDs/status, Markdown/YAML structure, and consistency with accepted decisions. Do not claim application tests or CI passed when they do not exist.
+```sh
+npm ci --ignore-scripts
+npm run check
+```
 
-Once the toolchain is selected, use its committed lockfile and documented scripts. Tests should demonstrate meaningful behavior, including incomplete inputs and false-positive cases.
+Use `npm run format` to apply formatting, then repeat the relevant checks. Commit lockfile changes with dependency changes. CI runs the same checks on Linux and Windows.
+
+Documentation changes still need link, milestone/status, and consistency review. Future tests should demonstrate real behavior, including incomplete inputs and false-positive cases. M01 acceptance cases remain specifications until their implementation milestones.
 
 ## Pull requests
 

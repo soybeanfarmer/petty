@@ -2,7 +2,7 @@
 
 ## Current status
 
-Petty contains planning documents only. There is no released monitor, live collector, hosted service, or production deployment yet.
+Petty contains design documents and a development foundation with a help/version-only CLI. There is no released monitor, live collector, hosted service, or production deployment yet.
 
 A supported-version policy will be published with the first release. Current documentation does not establish production support or security certification.
 

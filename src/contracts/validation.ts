@@ -128,6 +128,12 @@ function resourceFields(resource: Resource): Record<string, FieldState> {
     Object.entries(resource.properties).map(([key, value]) => ["properties." + key, value]),
   );
 }
+function knownEvidence(resource: Resource, fieldPath: string, state: FieldState): boolean {
+  return state.status === "value" || (
+    state.status === "null" && resource.kind === "role-assignment" &&
+    (fieldPath === "properties.appScopeId" || fieldPath === "properties.directoryScopeId")
+  );
+}
 function validateResource(resource: Resource, path: Path, report: Report): void {
   if (resource.kind === "conditional-access-policy") {
     Object.entries(resource.properties.users).forEach(([name, state]) => {
@@ -591,12 +597,12 @@ function validateBundle(bundle: EvaluationBundle, path: Path, report: Report): v
           );
         } else if (
           current &&
-          (state.status !== "value" || !observation.fieldPaths.includes(item.fieldPath))
+          (!knownEvidence(resource, item.fieldPath, state) || !observation.fieldPaths.includes(item.fieldPath))
         ) {
           report(
             "unknown-evidence",
             evidencePath,
-            "Missing, null, or unsupported fields cannot support a current decision.",
+            "Required evidence must be known; null is usable only for an assignment's explicit scope absence.",
           );
         }
       }

@@ -544,3 +544,30 @@ test("contract validation is deterministic and does not mutate caller input", ()
   );
   assert.deepEqual(input, before);
 });
+
+test("role receipts can evidence explicit null scope absence without depending on labels", () => {
+  for (const outcome of ["pass", "fail", "not-applicable"] as const) {
+    const input = bundle();
+    newerAttempt(input.snapshot, "principals");
+    const r = input.receipts[0]!;
+    r.assessment.subject = {
+      tenantId, namespace: "resource", kind: "role-assignment", id: "assignment/opaque-001",
+    };
+    r.assessment.outcome = outcome;
+    r.evidence = ["principalId", "roleDefinitionId", "directoryScopeId", "appScopeId"].map((field) => ({
+      kind: "resource-field", resource: r.assessment.subject,
+      observationId: "observation-assignments", fieldPath: "properties." + field,
+    }));
+    r.evidence.push({
+      kind: "resource-field",
+      resource: { tenantId, namespace: "resource", kind: "role-definition", id: "role-definition/opaque-001" },
+      observationId: "observation-definitions", fieldPath: "properties.templateId",
+    });
+    if (outcome === "fail") r.finding = failFinding();
+    accept("evaluationBundle", input);
+    const assignment = input.snapshot.resources[1]!;
+    assert.ok(assignment.kind === "role-assignment");
+    assignment.properties.appScopeId = { status: "missing", reason: "not-returned" };
+    reject("evaluationBundle", input, "unknown-evidence");
+  }
+});

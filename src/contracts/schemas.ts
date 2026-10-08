@@ -46,7 +46,7 @@ export function field<T extends z.ZodType>(value: T) {
 
 const directoryTarget = z.strictObject({ namespace: z.literal("directory-object"), id: guid });
 const roleTarget = z.strictObject({ namespace: z.literal("role-template"), id: guid });
-const userSymbol = (tokens: [string, ...string[]]) =>
+const userSymbol = <const T extends readonly [string, ...string[]]>(tokens: T) =>
   z.strictObject({
     namespace: z.literal("symbolic-user"),
     id: z.enum(tokens),

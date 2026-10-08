@@ -1,0 +1,42 @@
+name: Milestone work
+description: Plan a roadmap milestone or a bounded part of it.
+title: "[Milestone]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Copy the gate from ROADMAP.md. A milestone may need several PRs.
+        Do not include private tenant data or credentials.
+  - type: input
+    id: milestone
+    attributes:
+      label: Roadmap ID
+      placeholder: M01
+    validations:
+      required: true
+  - type: textarea
+    id: gate
+    attributes:
+      label: Completion gate
+      description: Copy the agreed gate and state which part this issue addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables and dependencies
+      description: List bounded outputs and prerequisites.
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification plan
+      description: Describe the demonstration and meaningful checks needed.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope boundaries and open decisions
+      description: State what requires resolution before dependent implementation.

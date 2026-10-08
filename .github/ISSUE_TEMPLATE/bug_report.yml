@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a defect in documentation or implemented behavior.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include credentials, real tenant exports, sensitive logs, or vulnerability details.
+        Follow SECURITY.md for security reports. Petty is currently at the planning stage.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Identify the affected release, commit, or document.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide steps and synthetic inputs where applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Environment, coverage, and sanitized evidence if relevant.

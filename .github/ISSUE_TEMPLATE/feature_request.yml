@@ -1,0 +1,42 @@
+name: Feature proposal
+description: Propose a bounded capability or improvement.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check ROADMAP.md and existing issues first. Keep public examples synthetic.
+        State how the proposal preserves Petty's read-only monitoring and evidence model.
+  - type: input
+    id: milestone
+    attributes:
+      label: Related roadmap milestone
+      placeholder: M01, M39, or new scope requiring discussion
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and user
+      description: Who needs this and what decision or workflow does it improve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Define the supported scope and module boundaries.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance examples
+      description: Describe success, failure, and incomplete-data cases.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and alternatives
+      description: Permissions, endpoints, data contracts, and relevant existing tools.

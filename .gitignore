@@ -1,0 +1,46 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+.next/
+coverage/
+*.tsbuildinfo
+.turbo/
+.cache/
+
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.pfx
+*.p12
+secrets/
+credentials/
+.token-cache/
+
+# Local tenant evidence and generated operational data
+# Synthetic fixtures should live under fixtures/ and be explicitly reviewed.
+/.petty/
+/tenant-data/
+/snapshots/
+/receipts/
+/reports/
+/logs/
+/backups/
+/work/
+*.log
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+
+# Editor and operating system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

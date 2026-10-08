@@ -1,6 +1,6 @@
 # Petty roadmap
 
-This is the agreed path from an empty repository to a production-grade monitor and later feature expansion. Product documentation and the repository foundation have been added; tenant collection and security-check implementation have not started.
+This is the agreed path from an empty repository to a production-grade monitor and later feature expansion. Product documentation, repository tooling, and shared data contracts have been added; tenant collection and security-check implementation have not started.
 
 ## How to use this roadmap
 
@@ -11,7 +11,7 @@ This is the agreed path from an empty repository to a production-grade monitor a
 - Keep the product within its documented support scope. Production readiness does not require every Microsoft resource or every future feature.
 - Define measurable operating and recovery targets before assessing production readiness.
 
-**Status key:** complete, pending. Milestones 0 through 2 are complete. This document is a plan, not evidence that the described capabilities exist.
+**Status key:** complete, pending. Milestones 0 through 3 are complete. This document is a plan, not evidence that the described capabilities exist.
 
 ## Foundation and offline prototype
 
@@ -20,7 +20,7 @@ This is the agreed path from an empty repository to a production-grade monitor a
 | M00 | Architecture agreed                     | TypeScript, Node.js LTS, Docker, Git history, deterministic checks, and read-only tenant access are agreed.                                                                                                   | Complete |
 | M01 | Product contract and threat model       | Define supported resources/properties, data ownership, collection frequency, expected tenant size, deployment assumptions, security boundaries, and the meaning of a finding.                                 | Complete |
 | M02 | Repository foundation                   | Reproducible installation, strict TypeScript checks, formatting, tests, CI, and contribution process. Pin supported tooling and dependencies.                                                                 | Complete |
-| M03 | Shared data contracts                   | Versioned schemas for resources, relationships, collection manifests, baselines, findings, and receipts.                                                                                                      | Pending  |
+| M03 | Shared data contracts                   | Versioned schemas for resources, relationships, collection manifests, baselines, findings, and receipts.                                                                                                      | Complete |
 | M04 | Synthetic tenant fixtures               | Small datasets demonstrate compliant settings, risky changes, missing permissions, partial collection, and malformed input.                                                                                   | Pending  |
 | M05 | Clerk: snapshot importer                | Import and validate fixture data through a CLI. Invalid or unsupported data produces explicit errors.                                                                                                         | Pending  |
 | M06 | Ledger: canonical tenant model          | Stable IDs, predictable serialization, configuration fingerprints, and relationships. Reordered set-like input produces identical configuration output while semantically ordered lists retain their meaning. | Pending  |
@@ -153,4 +153,4 @@ Verify API support, permissions, service limits, and tool versions when implemen
 - Behavioral contract tests alongside the existing foundation checks, and [ADR 0004](docs/decisions/0004-data-contracts.md).
 - [Data contract documentation](docs/DATA_CONTRACTS.md), including remaining authentication, fingerprint, rule, collector, and migration gates.
 
-M03 verification is pending in the milestone PR. Minimal test builders do not replace M04's reviewed scenario datasets. The help/version CLI is unchanged.
+M03 verification: 51 tests, strict type checks, clean builds, formatting, locked fresh installs, and structural schema export pass on Linux and Windows. Independent contract/API reviews found no remaining blockers. Execution evidence is recorded in the milestone PR. Minimal test builders do not replace M04's reviewed scenario datasets. The help/version CLI is unchanged.

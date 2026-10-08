@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This document records the intended architecture. The repository foundation has a help/version-only CLI; tenant-monitor modules and deployment are not implemented yet.
+This document records the intended architecture. The repository has shared versioned data contracts and a help/version-only CLI; tenant-monitor modules and deployment are not implemented yet.
 
 Petty is one modular TypeScript application, initially executed on Node.js LTS and packaged in Docker. The first release targets a single organization's self-hosted monitor. Azure Container Apps and Container Apps Jobs are the later managed deployment target.
 
@@ -40,7 +40,7 @@ Clerk is a data-source module, not the parent of the application. Ledger supplie
 
 ## Planned boundaries
 
-The following contracts are conceptual; their TypeScript signatures are defined in M03.
+The following module boundaries are conceptual. M03 defines the shared [persisted data contracts](DATA_CONTRACTS.md); source, store, evaluator, and job interfaces are implemented as their modules are built.
 
 | Boundary           | Purpose                                                                          |
 | ------------------ | -------------------------------------------------------------------------------- |

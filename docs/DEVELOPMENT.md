@@ -54,7 +54,7 @@ Prettier owns formatting. TypeScript provides current language checks; ESLint ha
 
 ## Continuous integration
 
-CI runs `npm ci --ignore-scripts` and `npm run check` on GitHub-hosted Linux and Windows, then checks that tracked files are unchanged. Action versions are pinned to SHAs. The token has read-only contents permission, checkout does not persist credentials, and no tenant secrets are used.
+CI runs `npm ci --ignore-scripts`, `npm run check`, and `npm run schemas:export` on GitHub-hosted Linux and Windows, then checks that tracked files are unchanged. Action versions are pinned to SHAs. The token has read-only contents permission, checkout does not persist credentials, and no tenant secrets are used.
 
 PRs run for all base branches so a milestone can depend on an earlier unmerged PR. Pushes on `main` and `build/**` also run. Require applicable checks through repository settings before production; branch protection is not configured by this workflow.
 

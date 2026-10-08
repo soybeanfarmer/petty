@@ -37,5 +37,7 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Verify toolchain, formatting, types, build, and tests
         run: npm run check
+      - name: Export structural contract schemas
+        run: npm run schemas:export
       - name: Ensure checks leave the checkout unchanged
         run: git diff --exit-code

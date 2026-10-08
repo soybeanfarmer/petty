@@ -86,7 +86,7 @@ Collect no message content, passwords, authentication secrets, or whole user pro
 
 M01 completes the documented scope and threat analysis. It does not establish an SLA, tested safeguards, live API support, or production readiness. [Acceptance cases](ACCEPTANCE_CASES.md) become executable fixtures/checks in later milestones. [The threat model](THREAT_MODEL.md) maps required controls to those gates.
 
-MIT is the selected source-code license. [ADR 0003](decisions/0003-toolchain.md) selects the pinned M02 runtime/package/test/format tooling. Executable schemas (M03), baseline syntax (M07), operational database (M17), API/UI frameworks (M20–M21), and AI/provider choices (M29–M33) remain open. Azure hosting remains the later deployment direction.
+MIT is the selected source-code license. [ADR 0003](decisions/0003-toolchain.md) selects the pinned M02 runtime/package/test/format tooling. [ADR 0004](decisions/0004-data-contracts.md) defines M03's executable contracts. Baseline authoring and rule-specific interpretation (M07), operational database (M17), API/UI frameworks (M20–M21), and AI/provider choices (M29–M33) remain open. Azure hosting remains the later deployment direction.
 
 ## Sources
 

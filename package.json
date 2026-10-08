@@ -19,11 +19,15 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "npm run toolchain:check && npm run format:check && npm run typecheck && npm test",
-    "start": "node dist/src/cli.js"
+    "start": "node dist/src/cli.js",
+    "schemas:export": "npm run build && node scripts/export-schemas.mjs"
   },
   "devDependencies": {
     "@types/node": "24.19.1",
     "prettier": "3.9.9",
     "typescript": "7.0.2"
+  },
+  "dependencies": {
+    "zod": "4.6.5"
   }
 }

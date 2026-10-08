@@ -15,9 +15,9 @@ Petty is being designed to check supported tenant configuration against approved
 
 ## Project status
 
-**Repository foundation.** This repository contains the product documents and TypeScript tooling with a help/version-only CLI. Tenant collection, security checks, and production deployment are not implemented yet.
+**Data contracts.** This repository contains product documents, TypeScript tooling, shared runtime contracts, and a help/version-only CLI. Tenant collection, security checks, and production deployment are not implemented yet.
 
-Milestones 0 through 2 are complete: architecture, product scope, threat model, and the verified TypeScript foundation. Next is M03: shared versioned data contracts. We will build one milestone at a time, with reviewable changes and explicit completion gates.
+Milestones 0 through 2 are complete: architecture, product scope, threat model, and the verified TypeScript foundation. M03 adds the shared versioned data contracts; verification is recorded in its PR. We will build one milestone at a time, with reviewable changes and explicit completion gates.
 
 The first prototype will use synthetic snapshots of Conditional Access policies, protected role assignments, and the identities needed to interpret them. Coverage will be documented per resource and property. A supported resource is not a claim that Petty can export, restore, or inspect an entire tenant.
 
@@ -77,7 +77,7 @@ These are modules of one application. They do not need to be separate services.
 - **Decision execution:** deterministic, versioned checks.
 - **AI:** bounded proposals and evaluation outside routine decision execution.
 
-The foundation uses npm 11.19.0, TypeScript 7.0.2, Prettier 3.9.9, and Node's built-in test runner. API/UI frameworks, operational database, and AI provider remain open. The source-code license is MIT.
+The foundation uses npm 11.19.0, TypeScript 7.0.2, Prettier 3.9.9, and Node's built-in test runner. Shared runtime contracts use pinned Zod 4.6.5. API/UI frameworks, operational database, and AI provider remain open. The source-code license is MIT.
 
 ## Try the foundation
 
@@ -111,6 +111,7 @@ Collection time is an observation interval, not proof of the precise time or act
 - [Roadmap](ROADMAP.md): milestones 0 through 43 and completion gates.
 - [Product contract](docs/PRODUCT_CONTRACT.md): initial operator, scale, timing, ownership, and lifecycle targets.
 - [Coverage](docs/COVERAGE.md): planned resource/property allowlist and the three initial checks.
+- [Data contracts](docs/DATA_CONTRACTS.md): versioned schemas, tenant binding, unavailable states, and linked evidence validation.
 - [Threat model](docs/THREAT_MODEL.md): trust boundaries, risks, and required verification gates.
 - [Acceptance cases](docs/ACCEPTANCE_CASES.md): synthetic behavioral specifications for later implementation.
 - [Architecture](docs/ARCHITECTURE.md): module boundaries, data flow, and invariants.

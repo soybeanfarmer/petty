@@ -143,3 +143,14 @@ Verify API support, permissions, service limits, and tool versions when implemen
 - [Microsoft Graph application authentication](https://learn.microsoft.com/en-us/graph/auth-v2-service)
 - [GitHub App installation authentication](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app)
 - [Azure Container Apps Jobs](https://learn.microsoft.com/en-us/azure/container-apps/jobs)
+
+## Milestone 3 deliverables
+
+- Version 1.0.0 strict runtime schemas and inferred TypeScript types for nine contract families.
+- Tenant-bound typed references, explicit value/null/missing/unsupported fields, approved baseline assertions, and retained per-scope observations.
+- Pure validation of duplicates, scope/coverage counts, relationship closure, receipt pins/outcomes, precise chronology, and required-evidence freshness.
+- Generated Draft 2020-12 structural JSON Schema with documented semantic limits.
+- Behavioral contract tests alongside the existing foundation checks, and [ADR 0004](docs/decisions/0004-data-contracts.md).
+- [Data contract documentation](docs/DATA_CONTRACTS.md), including remaining authentication, fingerprint, rule, collector, and migration gates.
+
+M03 verification is pending in the milestone PR. Minimal test builders do not replace M04's reviewed scenario datasets. The help/version CLI is unchanged.

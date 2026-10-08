@@ -234,12 +234,18 @@ function validateManifest(manifest: Manifest, path: Path, report: Report): void 
       report("scope-limit", scopePath, "Retained scope exceeds the declared resource limit.");
     }
     if (latest.status === "complete") {
-      if (retained.provenance.schemaVersion !== manifest.schemaVersion ||
-          retained.provenance.collectorVersion !== manifest.collectorVersion ||
-          retained.provenance.apiVersion !== manifest.apiVersion ||
-          retained.provenance.allowlistVersion !== manifest.allowlistVersion ||
-          retained.provenance.source !== manifest.source) {
-        report("observation-provenance", scopePath, "Latest complete observation must carry this attempt's provenance.");
+      if (
+        retained.provenance.schemaVersion !== manifest.schemaVersion ||
+        retained.provenance.collectorVersion !== manifest.collectorVersion ||
+        retained.provenance.apiVersion !== manifest.apiVersion ||
+        retained.provenance.allowlistVersion !== manifest.allowlistVersion ||
+        retained.provenance.source !== manifest.source
+      ) {
+        report(
+          "observation-provenance",
+          scopePath,
+          "Latest complete observation must carry this attempt's provenance.",
+        );
       }
       if (
         retained.attemptId !== latest.attemptId ||

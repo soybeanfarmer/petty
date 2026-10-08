@@ -606,9 +606,12 @@ test("retained observations preserve original collector/source provenance after 
     manifest: {
       ...incompatible.manifest,
       scopes: incompatible.manifest.scopes.map((scope) => ({
-        ...scope, retainedObservation: {
-          ...scope.retainedObservation, provenance: {
-            ...scope.retainedObservation!.provenance, allowlistVersion: "entra-core/0",
+        ...scope,
+        retainedObservation: {
+          ...scope.retainedObservation,
+          provenance: {
+            ...scope.retainedObservation!.provenance,
+            allowlistVersion: "entra-core/0",
           },
         },
       })),

@@ -28,12 +28,14 @@ Run versioned deterministic checks in routine operation. AI proposes changes out
 - API limits, permission gaps, partial collection, and temporal inconsistency remain visible.
 - Bun or Cloudflare adapters may be evaluated later, but are not current deployment targets.
 
+## M01 follow-up
+
+[ADR 0002](0002-initial-product-contract.md) records the completed initial resource/property contract, threat model, operational design targets, and the owner's MIT license selection. It resolves those open M01 items without changing the base architecture.
+
 ## Open implementation decisions
 
 | Decision | When to resolve |
 | --- | --- |
-| Supported resources, properties, checks, and threat model | M01 |
-| Software license | M01, before implementation releases |
 | Package manager, supported Node version, test runner, lint/format tools | M02 |
 | Schema validation and policy representation | M03 and M07 |
 | Microsoft authentication and credential strategy | M12 |
@@ -41,9 +43,9 @@ Run versioned deterministic checks in routine operation. AI proposes changes out
 | Operational database and migrations | M17 |
 | API framework and frontend framework | M20 and M21 |
 | Notification and case integrations | M23 |
-| Backup, retention, and recovery targets | Define in M01; verify in M26 |
+| Backup, retention, and recovery implementation | Targets defined in M01; verify in M26 |
 | AI provider, permitted data, evaluation policy, and budget | M29 through M33 |
 | Managed database, region, secret storage, and deployment identities | M34 |
 | Active-response authorization and product boundary | Separate decision in M43 |
 
-This ADR does not select a database, AI provider, package manager, frontend framework, or software license.
+This ADR does not select a database, AI provider, package manager, or frontend framework. License selection is recorded in ADR 0002.

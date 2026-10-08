@@ -15,9 +15,9 @@ Petty is being designed to check supported tenant configuration against approved
 
 ## Project status
 
-**Planning stage.** This repository currently contains the roadmap and project guidance. It does not yet contain a runnable application, live tenant collector, or production deployment.
+**Planning stage.** This repository currently contains the roadmap, initial product contract, threat model, and project guidance. It does not yet contain a runnable application, live tenant collector, or production deployment.
 
-Milestone 0 is complete: the project direction and base architecture are agreed. Milestone 1 defines the product contract and threat model. We will build one milestone at a time, with reviewable changes and explicit completion gates.
+Milestones 0 and 1 are complete: the base architecture, initial product contract, supported property scope, and threat model are documented. Next is M02: establish the TypeScript toolchain and CI. We will build one milestone at a time, with reviewable changes and explicit completion gates.
 
 The first prototype will use synthetic snapshots of Conditional Access policies, protected role assignments, and the identities needed to interpret them. Coverage will be documented per resource and property. A supported resource is not a claim that Petty can export, restore, or inspect an entire tenant.
 
@@ -77,7 +77,7 @@ These are modules of one application. They do not need to be separate services.
 - **Decision execution:** deterministic, versioned checks.
 - **AI:** bounded proposals and evaluation outside routine decision execution.
 
-Package management, API/UI frameworks, operational database, AI provider, and software license remain decisions to make. No application setup or run commands exist yet.
+Package management, API/UI frameworks, operational database, and AI provider remain decisions to make. The source-code license is MIT. No application setup or run commands exist yet.
 
 ## What a receipt records
 
@@ -97,12 +97,16 @@ Collection time is an observation interval, not proof of the precise time or act
 ## Project documents
 
 - [Roadmap](ROADMAP.md): milestones 0 through 43 and completion gates.
+- [Product contract](docs/PRODUCT_CONTRACT.md): initial operator, scale, timing, ownership, and lifecycle targets.
+- [Coverage](docs/COVERAGE.md): planned resource/property allowlist and the three initial checks.
+- [Threat model](docs/THREAT_MODEL.md): trust boundaries, risks, and required verification gates.
+- [Acceptance cases](docs/ACCEPTANCE_CASES.md): synthetic behavioral specifications for later implementation.
 - [Architecture](docs/ARCHITECTURE.md): module boundaries, data flow, and invariants.
-- [Initial architecture decision](docs/decisions/0001-base-architecture.md): agreed choices and open decisions.
+- [Architecture decisions](docs/decisions/README.md): accepted architecture and initial product scope.
 - [Contributing](CONTRIBUTING.md): how to work one milestone at a time.
 - [Security](SECURITY.md): reporting and data-handling guidance.
 - [Agent instructions](AGENTS.md): implementation guidance for coding agents.
 
 ## License
 
-A software license has not been selected. Public visibility does not itself grant an open-source license. License selection is recorded as an open decision before distributing implementation releases.
+[MIT](LICENSE). Public source examples are synthetic; this license does not authorize access to an organization's tenant or private evidence.

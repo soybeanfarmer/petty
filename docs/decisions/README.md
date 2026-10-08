@@ -5,6 +5,7 @@ Use architecture decision records (ADRs) for consequential choices that affect P
 ## Existing records
 
 - [0001: Base architecture](0001-base-architecture.md)
+- [0002: Initial product contract](0002-initial-product-contract.md)
 
 ## Process
 

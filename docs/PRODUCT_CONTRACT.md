@@ -22,7 +22,7 @@ The organization retains control of its tenant data. Running Petty does not auth
 
 The first prototype imports synthetic snapshots. Live collection starts in M12–M15 against an authorized lab tenant; private Git publishing starts in M16. This contract does not describe a runnable exporter or complete tenant inventory.
 
-Initial checks are required-policy enforcement state, unexpected explicit exclusions, and unapproved protected role assignments. An observed difference is a change; a violation of the approved baseline is policy drift. Yesterday's observed state never automatically becomes approved.
+Initial checks are required-policy enabled state, unexpected explicit exclusions, and unapproved protected role assignments. An observed difference is a change; a violation of the approved baseline is policy drift. Yesterday's observed state never automatically becomes approved.
 
 Membership expansion, PIM eligibility/schedules, custom role analysis, effective access/MFA simulation, sign-in/audit telemetry, other Microsoft workloads, sovereign clouds, tenant restoration, and tenant mutations are outside this initial scope. Changes to the allowlist or interpretation require updated coverage, permission review, synthetic cases, and an appropriate roadmap gate.
 

@@ -23,7 +23,7 @@ All names and IDs below are logical synthetic identifiers. M04 will use schema-v
 | A04 | Required policy absent from a complete, fresh, compatible listing. | Fail required-policy check and report observed removal if the previous comparable listing contained it. | M08, M10 |
 | A05 | Add `user-unapproved` to explicit user exclusions. | Fail exclusion check; receipt identifies the typed set and unapproved ID. | M08, M09 |
 | A06 | Assign protected role to `user-unapproved` at `/`. | Fail role check; tuple/assignment ID and policy evidence recorded. | M08, M09 |
-| A07 | Protected role assigned directly to approved `group-admins`. | Pass direct assignment predicate; no claim about members or inherited privilege. | M08, M18 |
+| A07 | Protected role assigned directly to approved `group-admins`. | Pass direct assignment predicate; no claim about members or inherited privilege. | M08 |
 | A08 | Role assigned at administrative-unit scope or to an unprotected role. | Not applicable to initial tenant-wide protected-role predicate; display scope/coverage limitation. Not a security approval. | M08, M14 |
 | A09 | Required policy page fails or is not fetched; previously seen policy is absent from partial input. | Unknown current policy assessment; no deletion. Preserve previous evidence and original time. | M04, M08, M10, M15 |
 | A10 | Required endpoint returns 403, times out, exceeds bounds, or exhausts retry budget. | Unknown affected current checks and visible collection issue; no safe/empty fallback. | M12, M15, M25 |

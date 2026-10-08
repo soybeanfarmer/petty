@@ -26,7 +26,7 @@ Policy names and role names are observed metadata; an unexplained rename can be 
 
 | Check | Required baseline | Predicate |
 | --- | --- | --- |
-| Required policy enforced | Required policy IDs for the bound tenant | The observed policy exists and `state` is exactly `enabled`. `disabled` and `enabledForReportingButNotEnforced` fail. Absence fails only after a compatible, complete, fresh policy listing. |
+| Required policy enabled | Required policy IDs for the bound tenant | The observed policy exists and `state` is exactly `enabled`. `disabled` and `enabledForReportingButNotEnforced` fail. Absence fails only after a compatible, complete, fresh policy listing. |
 | Explicit exclusions approved | For each monitored policy, allowed values for each of `excludeUsers`, `excludeGroups`, and `excludeRoles` | Each observed explicit exclusion is in its corresponding approved set. Check typed sets separately. An empty approved set forbids explicit exclusions; a missing baseline set is unknown. |
 | Protected role assignment approved | Protected built-in role definition IDs, resolved template IDs, and allowed principal IDs per tenant-wide role | Every applicable active assignment tuple `(tenantId, principalId, roleDefinitionId, directoryScopeId)` is approved. Tenant scope requires `directoryScopeId = "/"` and no conflicting application scope. |
 

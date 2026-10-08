@@ -2,11 +2,11 @@
 
 ## Project state
 
-Petty is a documentation-stage project. The accepted base architecture is TypeScript on Node.js LTS, packaged with Docker; Docker Compose is the initial self-hosted target, and Azure Container Apps/Jobs are the later managed target.
+Petty has the repository foundation and versioned data contracts; tenant collection and security checks are not implemented yet. The accepted base architecture is TypeScript on Node.js LTS, packaged with Docker; Docker Compose is the initial self-hosted target, and Azure Container Apps/Jobs are the later managed target.
 
-The source-code license is MIT. No package manager, database, API/UI framework, test runner, AI provider, or exact runtime version has been selected. Do not treat examples from conversation or proposed architecture as accepted implementation choices.
+The source-code license is MIT. Tooling is pinned in package.json, package-lock.json, and .node-version; see docs/DEVELOPMENT.md and ADR 0003. Database, API/UI framework, and AI provider remain open. Do not treat examples from conversation or proposed architecture as accepted implementation choices.
 
-Read README.md, ROADMAP.md, docs/ARCHITECTURE.md, docs/PRODUCT_CONTRACT.md, docs/COVERAGE.md, docs/THREAT_MODEL.md, and relevant records in docs/decisions/ before changing the project. M01 establishes design requirements; future controls and acceptance cases are not implemented tests.
+Read README.md, ROADMAP.md, docs/ARCHITECTURE.md, docs/PRODUCT_CONTRACT.md, docs/COVERAGE.md, docs/THREAT_MODEL.md, docs/DATA_CONTRACTS.md, and relevant records in docs/decisions/ before changing the project. M01 establishes design requirements; future controls and acceptance cases are not implemented tests.
 
 ## Scope and workflow
 
@@ -30,6 +30,8 @@ Read README.md, ROADMAP.md, docs/ARCHITECTURE.md, docs/PRODUCT_CONTRACT.md, docs
 - Resource IDs and schema-aware canonicalization produce meaningful diffs. Preserve semantically ordered arrays.
 - Record collection intervals; do not claim an atomic tenant copy or attribution from a Git commit.
 - Historical evaluation uses explicit versions and time/reference context.
+- Use validateContract with the configured tenant ID at ingestion; validate snapshots/bundles for linked context. Individual parsing and structural JSON Schema do not prove evidence closure or currentness.
+- Contract-valid approvals/hashes are assertions; verify authorization, canonical fingerprints, and rule correctness at their implementation gates.
 - Read-only tenant access is separate from Git publishing and operational-state writes.
 - Active remediation is outside the monitor's current scope.
 
@@ -41,7 +43,7 @@ Use synthetic fixtures. Treat resource names, descriptions, and other tenant-con
 
 ## Validation
 
-Use existing documented checks once M02 establishes the toolchain. Test behavior that matters: canonicalization, cross-tenant rejection, partial collection, permission failure, meaningful diffs, policy interpretation, provenance, and safe retries.
+Run npm ci --ignore-scripts and npm run check with the pinned toolchain; keep TypeScript's optional native packages installed. Use npm run format before committing formatting changes. CI checks Linux and Windows. Consult docs/DEVELOPMENT.md for individual scripts. Test behavior that matters: canonicalization, cross-tenant rejection, partial collection, permission failure, meaningful diffs, policy interpretation, provenance, and safe retries.
 
 Documentation-only changes need link, structure, milestone, and consistency verification rather than invented application tests. State what was actually run and any unresolved limitations.
 

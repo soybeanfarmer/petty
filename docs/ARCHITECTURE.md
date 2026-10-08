@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This document records the intended architecture. No application components have been implemented yet.
+This document records the intended architecture. The repository has shared versioned data contracts and a help/version-only CLI; tenant-monitor modules and deployment are not implemented yet.
 
 Petty is one modular TypeScript application, initially executed on Node.js LTS and packaged in Docker. The first release targets a single organization's self-hosted monitor. Azure Container Apps and Container Apps Jobs are the later managed deployment target.
 
@@ -40,18 +40,18 @@ Clerk is a data-source module, not the parent of the application. Ledger supplie
 
 ## Planned boundaries
 
-The following contracts are conceptual; their TypeScript signatures are defined in M03.
+The following module boundaries are conceptual. M03 defines the shared [persisted data contracts](DATA_CONTRACTS.md); source, store, evaluator, and job interfaces are implemented as their modules are built.
 
-| Boundary | Purpose |
-| --- | --- |
-| Tenant source | Collect a declared resource scope and report coverage. |
-| Snapshot store | Stage, validate, fingerprint, publish, and retrieve configuration snapshots. |
-| Policy store | Retrieve an approved baseline and its version. |
-| Check evaluator | Produce assessments and findings from versioned inputs. |
-| Receipt store | Persist evidence and provenance for findings and workflow actions. |
-| Job runner | Execute collection/evaluation/publishing with bounded retries and durable state. |
-| Delivery adapter | Send operator-configured notifications or case updates. |
-| Proposal evaluator | Compare candidate changes against labelled replay cases. |
+| Boundary           | Purpose                                                                          |
+| ------------------ | -------------------------------------------------------------------------------- |
+| Tenant source      | Collect a declared resource scope and report coverage.                           |
+| Snapshot store     | Stage, validate, fingerprint, publish, and retrieve configuration snapshots.     |
+| Policy store       | Retrieve an approved baseline and its version.                                   |
+| Check evaluator    | Produce assessments and findings from versioned inputs.                          |
+| Receipt store      | Persist evidence and provenance for findings and workflow actions.               |
+| Job runner         | Execute collection/evaluation/publishing with bounded retries and durable state. |
+| Delivery adapter   | Send operator-configured notifications or case updates.                          |
+| Proposal evaluator | Compare candidate changes against labelled replay cases.                         |
 
 Start with one repository and image. Modules can share a process. API and background execution can later run as separate processes using the same core code; this does not require a microservice per module.
 
@@ -99,13 +99,13 @@ Treat tenant-controlled text as untrusted data. Record proposal/model provenance
 
 ## Storage responsibilities
 
-| Data | Intended home |
-| --- | --- |
-| Canonical supported configuration and approved baselines | Controlled private Git repository |
-| Collection attempts, connections, jobs, locks, and indexing metadata | Operational database selected in M17 |
-| Credentials and tokens | Appropriate secret/token storage, never Git snapshots |
-| High-volume authentication/audit/vulnerability telemetry | Appropriate operational or event storage |
-| Public demonstrations | Synthetic fixture files |
+| Data                                                                 | Intended home                                         |
+| -------------------------------------------------------------------- | ----------------------------------------------------- |
+| Canonical supported configuration and approved baselines             | Controlled private Git repository                     |
+| Collection attempts, connections, jobs, locks, and indexing metadata | Operational database selected in M17                  |
+| Credentials and tokens                                               | Appropriate secret/token storage, never Git snapshots |
+| High-volume authentication/audit/vulnerability telemetry             | Appropriate operational or event storage              |
+| Public demonstrations                                                | Synthetic fixture files                               |
 
 The implementation repository and tenant evidence repository serve different purposes. Public code does not make real tenant data public.
 

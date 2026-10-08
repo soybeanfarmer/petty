@@ -34,18 +34,17 @@ Run versioned deterministic checks in routine operation. AI proposes changes out
 
 ## Open implementation decisions
 
-| Decision | When to resolve |
-| --- | --- |
-| Package manager, supported Node version, test runner, lint/format tools | M02 |
-| Schema validation and policy representation | M03 and M07 |
-| Microsoft authentication and credential strategy | M12 |
-| GitHub App permissions and repository ownership | M16 |
-| Operational database and migrations | M17 |
-| API framework and frontend framework | M20 and M21 |
-| Notification and case integrations | M23 |
-| Backup, retention, and recovery implementation | Targets defined in M01; verify in M26 |
-| AI provider, permitted data, evaluation policy, and budget | M29 through M33 |
-| Managed database, region, secret storage, and deployment identities | M34 |
-| Active-response authorization and product boundary | Separate decision in M43 |
+| Decision                                                            | When to resolve                       |
+| ------------------------------------------------------------------- | ------------------------------------- |
+| Schema validation and policy representation                         | M03 and M07                           |
+| Microsoft authentication and credential strategy                    | M12                                   |
+| GitHub App permissions and repository ownership                     | M16                                   |
+| Operational database and migrations                                 | M17                                   |
+| API framework and frontend framework                                | M20 and M21                           |
+| Notification and case integrations                                  | M23                                   |
+| Backup, retention, and recovery implementation                      | Targets defined in M01; verify in M26 |
+| AI provider, permitted data, evaluation policy, and budget          | M29 through M33                       |
+| Managed database, region, secret storage, and deployment identities | M34                                   |
+| Active-response authorization and product boundary                  | Separate decision in M43              |
 
-This ADR does not select a database, AI provider, package manager, or frontend framework. License selection is recorded in ADR 0002.
+This ADR does not select a database, AI provider, or frontend framework. License selection is recorded in ADR 0002; the M02 toolchain is recorded in [ADR 0003](0003-toolchain.md).

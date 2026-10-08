@@ -45,6 +45,7 @@ const approvedPaths = new Set([
   "src/cli.ts",
   "test/cli.test.ts",
   "test/toolchain/strictness.fixture.ts",
+  "test/toolchain/contracts.fixture.ts",
   "tsconfig.json",
   "src/contracts/schemas.ts",
   "src/contracts/validation.ts",

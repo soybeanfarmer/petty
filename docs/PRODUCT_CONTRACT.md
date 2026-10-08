@@ -30,12 +30,12 @@ Membership expansion, PIM eligibility/schedules, custom role analysis, effective
 
 Each check returns one outcome for its declared subject and predicate:
 
-| Outcome | Meaning |
-| --- | --- |
-| Pass | Complete, fresh, supported evidence satisfies this exact approved policy predicate. |
-| Fail | Sufficient fresh evidence establishes a violation of that predicate. A finding is emitted. |
-| Unknown | Required evidence, approved policy, permission, freshness, or semantics are insufficient. Explain the blocking reason. |
-| Not applicable | The subject is explicitly outside this check's declared applicability. This is not a security endorsement. |
+| Outcome        | Meaning                                                                                                                |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Pass           | Complete, fresh, supported evidence satisfies this exact approved policy predicate.                                    |
+| Fail           | Sufficient fresh evidence establishes a violation of that predicate. A finding is emitted.                             |
+| Unknown        | Required evidence, approved policy, permission, freshness, or semantics are insufficient. Explain the blocking reason. |
+| Not applicable | The subject is explicitly outside this check's declared applicability. This is not a security endorsement.             |
 
 A finding is an evidence-backed policy violation, not proof of compromise, comprehensive compliance, or effective enforcement. Unknown coverage creates a visible assessment/collection issue; it cannot disappear inside a green summary. Historical failures can remain visible with their original time, but cannot be presented as a current decision.
 
@@ -45,15 +45,15 @@ Every assessment pins tenant and subject IDs, input fingerprints, collection int
 
 These are initial engineering targets for later testing, not measured performance or service guarantees.
 
-| Item | Initial target |
-| --- | --- |
-| Schedule | One scan every 60 minutes, plus an operator-requested scan; serialize jobs for the tenant. |
-| Attempt deadline | 20 minutes, including bounded retries; a timeout creates incomplete coverage. |
-| Freshness limit | 120 minutes at the recorded evaluation time, measured from each scope's original collection start. |
-| Expected organization | Up to 10,000 users and 2,000 groups; this is context, not a promise to export every object. |
-| Initial scan envelope | Up to 250 policies, 2,000 active role assignments, 250 role definitions, and 15,000 distinct principal references. |
+| Item                          | Initial target                                                                                                                   |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Schedule                      | One scan every 60 minutes, plus an operator-requested scan; serialize jobs for the tenant.                                       |
+| Attempt deadline              | 20 minutes, including bounded retries; a timeout creates incomplete coverage.                                                    |
+| Freshness limit               | 120 minutes at the recorded evaluation time, measured from each scope's original collection start.                               |
+| Expected organization         | Up to 10,000 users and 2,000 groups; this is context, not a promise to export every object.                                      |
+| Initial scan envelope         | Up to 250 policies, 2,000 active role assignments, 250 role definitions, and 15,000 distinct principal references.               |
 | Evaluation/publication target | A successful scan and publication within 15 minutes at the declared envelope under normal upstream availability; measure in M27. |
-| Validation environment | Synthetic fixtures first; then a consenting commercial lab tenant with the relevant Conditional Access license. |
+| Validation environment        | Synthetic fixtures first; then a consenting commercial lab tenant with the relevant Conditional Access license.                  |
 
 These are Petty planning bounds, not Microsoft API limits. Count/size/page limits must be enforced during collection, not by truncating and claiming success. Exceeding supported bounds produces incomplete/unsupported coverage with an actionable reason. Implementation will document memory/storage budgets and measured supported limits before production.
 
@@ -86,7 +86,7 @@ Collect no message content, passwords, authentication secrets, or whole user pro
 
 M01 completes the documented scope and threat analysis. It does not establish an SLA, tested safeguards, live API support, or production readiness. [Acceptance cases](ACCEPTANCE_CASES.md) become executable fixtures/checks in later milestones. [The threat model](THREAT_MODEL.md) maps required controls to those gates.
 
-MIT is the selected source-code license. Exact Node LTS version, package manager, test/lint/format tooling (M02), executable schemas (M03), baseline syntax (M07), operational database (M17), API/UI frameworks (M20–M21), and AI/provider choices (M29–M33) remain open. Azure hosting remains the later deployment direction.
+MIT is the selected source-code license. [ADR 0003](decisions/0003-toolchain.md) selects the pinned M02 runtime/package/test/format tooling. Executable schemas (M03), baseline syntax (M07), operational database (M17), API/UI frameworks (M20–M21), and AI/provider choices (M29–M33) remain open. Azure hosting remains the later deployment direction.
 
 ## Sources
 

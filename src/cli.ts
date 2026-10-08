@@ -21,7 +21,9 @@ if (args.length === 0 || (args.length === 1 && ["--help", "-h"].includes(args[0]
   ) as { version: string };
   process.stdout.write(`petty ${manifest.version}\n`);
 } else {
-  process.stderr.write(`Unsupported arguments: ${args.map((arg) => JSON.stringify(arg)).join(" ")}\n`);
+  process.stderr.write(
+    `Unsupported arguments: ${args.map((arg) => JSON.stringify(arg)).join(" ")}\n`,
+  );
   process.stderr.write("Use --help for available options.\n");
   process.exitCode = 2;
 }

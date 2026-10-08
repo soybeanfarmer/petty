@@ -6,6 +6,7 @@ Use architecture decision records (ADRs) for consequential choices that affect P
 
 - [0001: Base architecture](0001-base-architecture.md)
 - [0002: Initial product contract](0002-initial-product-contract.md)
+- [0003: Repository toolchain](0003-toolchain.md)
 
 ## Process
 

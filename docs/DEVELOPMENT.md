@@ -4,12 +4,12 @@ Petty currently contains the repository foundation. The CLI supports help/versio
 
 ## Pinned tools
 
-| Tool | Version |
-| --- | --- |
-| Node.js LTS | 24.21.0 |
-| npm | 11.19.0 |
-| TypeScript | 7.0.2 |
-| Prettier | 3.9.9 |
+| Tool                 | Version |
+| -------------------- | ------- |
+| Node.js LTS          | 24.21.0 |
+| npm                  | 11.19.0 |
+| TypeScript           | 7.0.2   |
+| Prettier             | 3.9.9   |
 | Node 24 declarations | 24.19.1 |
 
 Install the pinned Node release with your preferred installer/version manager; it includes the pinned npm. `.node-version` is CI's runtime source, and `.nvmrc` supports compatible local managers. Exact package versions and `package-lock.json` are committed. See [ADR 0003](decisions/0003-toolchain.md).
@@ -30,17 +30,17 @@ Install the declared versions rather than bypassing engine checks. Keep optional
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run toolchain:check` | Verify pinned Node/npm through npm's environment. |
-| `npm run format` | Apply Prettier to source/configuration/docs. |
-| `npm run format:check` | Check formatting without writing. |
-| `npm run typecheck` | Check the project without emitting files. |
-| `npm run build` | Remove the fixed `dist/` directory and compile source/tests. |
-| `npm test` | Build and run only emitted `dist/test/**/*.test.js` tests. |
-| `npm run check` | Run the complete validation sequence. |
-| `npm start -- --help` | Run the previously built CLI. |
-| `npm run clean` | Remove generated build output. |
+| Command                   | Purpose                                                      |
+| ------------------------- | ------------------------------------------------------------ |
+| `npm run toolchain:check` | Verify pinned Node/npm through npm's environment.            |
+| `npm run format`          | Apply Prettier to source/configuration/docs.                 |
+| `npm run format:check`    | Check formatting without writing.                            |
+| `npm run typecheck`       | Check the project without emitting files.                    |
+| `npm run build`           | Remove the fixed `dist/` directory and compile source/tests. |
+| `npm test`                | Build and run only emitted `dist/test/**/*.test.js` tests.   |
+| `npm run check`           | Run the complete validation sequence.                        |
+| `npm start -- --help`     | Run the previously built CLI.                                |
+| `npm run clean`           | Remove generated build output.                               |
 
 Build before running `npm start` alone. Paths resolve from scripts/modules, not shell-specific cleanup commands. Source uses ESM and relative imports ending in `.js`. This is one small private package, with no runtime dependencies, bundler, database, web framework, or collector SDK.
 

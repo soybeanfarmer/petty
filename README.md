@@ -17,7 +17,7 @@ Petty is being designed to check supported tenant configuration against approved
 
 **Repository foundation.** This repository contains the product documents and TypeScript tooling with a help/version-only CLI. Tenant collection, security checks, and production deployment are not implemented yet.
 
-Milestones 0 and 1 are complete: the base architecture, initial product contract, supported property scope, and threat model are documented. M02 is establishing the TypeScript toolchain and CI. We will build one milestone at a time, with reviewable changes and explicit completion gates.
+Milestones 0 through 2 are complete: architecture, product scope, threat model, and the verified TypeScript foundation. Next is M03: shared versioned data contracts. We will build one milestone at a time, with reviewable changes and explicit completion gates.
 
 The first prototype will use synthetic snapshots of Conditional Access policies, protected role assignments, and the identities needed to interpret them. Coverage will be documented per resource and property. A supported resource is not a claim that Petty can export, restore, or inspect an entire tenant.
 

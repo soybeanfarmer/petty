@@ -11,7 +11,7 @@ This is the agreed path from an empty repository to a production-grade monitor a
 - Keep the product within its documented support scope. Production readiness does not require every Microsoft resource or every future feature.
 - Define measurable operating and recovery targets before assessing production readiness.
 
-**Status key:** complete, pending. Milestones 0 and 1 are complete. This document is a plan, not evidence that the described capabilities exist.
+**Status key:** complete, pending. Milestones 0 through 2 are complete. This document is a plan, not evidence that the described capabilities exist.
 
 ## Foundation and offline prototype
 
@@ -19,7 +19,7 @@ This is the agreed path from an empty repository to a production-grade monitor a
 | --- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | M00 | Architecture agreed                     | TypeScript, Node.js LTS, Docker, Git history, deterministic checks, and read-only tenant access are agreed.                                                                                                   | Complete |
 | M01 | Product contract and threat model       | Define supported resources/properties, data ownership, collection frequency, expected tenant size, deployment assumptions, security boundaries, and the meaning of a finding.                                 | Complete |
-| M02 | Repository foundation                   | Reproducible installation, strict TypeScript checks, formatting, tests, CI, and contribution process. Pin supported tooling and dependencies.                                                                 | Pending  |
+| M02 | Repository foundation                   | Reproducible installation, strict TypeScript checks, formatting, tests, CI, and contribution process. Pin supported tooling and dependencies.                                                                 | Complete |
 | M03 | Shared data contracts                   | Versioned schemas for resources, relationships, collection manifests, baselines, findings, and receipts.                                                                                                      | Pending  |
 | M04 | Synthetic tenant fixtures               | Small datasets demonstrate compliant settings, risky changes, missing permissions, partial collection, and malformed input.                                                                                   | Pending  |
 | M05 | Clerk: snapshot importer                | Import and validate fixture data through a CLI. Invalid or unsupported data produces explicit errors.                                                                                                         | Pending  |
@@ -132,7 +132,7 @@ M01 validation covers internal links, document structure, all eight deliverables
 - SHA-pinned, read-only GitHub Actions verification on Linux and Windows.
 - [Development instructions](docs/DEVELOPMENT.md), synchronized contribution guidance, and [ADR 0003](docs/decisions/0003-toolchain.md).
 
-M02 remains pending until clean-install and complete CI verification pass on both operating systems. The CLI does not implement the M01 security acceptance specifications.
+M02 validation: [locked-install CI passed on Linux and Windows](https://github.com/soybeanfarmer/petty/actions/runs/37768413796), including pinned toolchain verification, formatting, strict type checking, clean compilation, all five CLI subprocess tests, and unchanged tracked files. Independent toolchain/CI review found no blockers. The CLI does not implement the M01 security acceptance specifications.
 
 ## References
 

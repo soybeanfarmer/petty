@@ -1,8 +1,14 @@
 import type { Resource } from "../../src/contracts/index.js";
 
 type Policy = Extract<Resource, { kind: "conditional-access-policy" }>;
-type IncludeUser = Extract<Policy["properties"]["users"]["includeUsers"], { status: "value" }>["value"][number];
-type ExcludeUser = Extract<Policy["properties"]["users"]["excludeUsers"], { status: "value" }>["value"][number];
+type IncludeUser = Extract<
+  Policy["properties"]["users"]["includeUsers"],
+  { status: "value" }
+>["value"][number];
+type ExcludeUser = Extract<
+  Policy["properties"]["users"]["excludeUsers"],
+  { status: "value" }
+>["value"][number];
 
 const everyone: IncludeUser = { namespace: "symbolic-user", id: "All" };
 const guests: ExcludeUser = { namespace: "symbolic-user", id: "GuestsOrExternalUsers" };

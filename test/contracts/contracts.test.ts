@@ -551,17 +551,30 @@ test("role receipts can evidence explicit null scope absence without depending o
     newerAttempt(input.snapshot, "principals");
     const r = input.receipts[0]!;
     r.assessment.subject = {
-      tenantId, namespace: "resource", kind: "role-assignment", id: "assignment/opaque-001",
+      tenantId,
+      namespace: "resource",
+      kind: "role-assignment",
+      id: "assignment/opaque-001",
     };
     r.assessment.outcome = outcome;
-    r.evidence = ["principalId", "roleDefinitionId", "directoryScopeId", "appScopeId"].map((field) => ({
-      kind: "resource-field", resource: r.assessment.subject,
-      observationId: "observation-assignments", fieldPath: "properties." + field,
-    }));
+    r.evidence = ["principalId", "roleDefinitionId", "directoryScopeId", "appScopeId"].map(
+      (field) => ({
+        kind: "resource-field",
+        resource: r.assessment.subject,
+        observationId: "observation-assignments",
+        fieldPath: "properties." + field,
+      }),
+    );
     r.evidence.push({
       kind: "resource-field",
-      resource: { tenantId, namespace: "resource", kind: "role-definition", id: "role-definition/opaque-001" },
-      observationId: "observation-definitions", fieldPath: "properties.templateId",
+      resource: {
+        tenantId,
+        namespace: "resource",
+        kind: "role-definition",
+        id: "role-definition/opaque-001",
+      },
+      observationId: "observation-definitions",
+      fieldPath: "properties.templateId",
     });
     if (outcome === "fail") r.finding = failFinding();
     accept("evaluationBundle", input);
@@ -570,4 +583,48 @@ test("role receipts can evidence explicit null scope absence without depending o
     assignment.properties.appScopeId = { status: "missing", reason: "not-returned" };
     reject("evaluationBundle", input, "unknown-evidence");
   }
+});
+
+test("retained observations preserve original collector/source provenance after an upgrade failure", () => {
+  const input = snapshot();
+  input.manifest.attemptId = "attempt-2";
+  input.manifest.createdAt = "2026-10-08T11:12:00Z";
+  input.manifest.collectorVersion = "test/2";
+  input.manifest.source = "microsoft-graph";
+  input.manifest.scopes.forEach((scope) => incompleteScope(scope));
+  const result = validateContract("snapshot", input);
+  assert.ok(result.success);
+  if (result.success) {
+    const original = result.data.manifest.scopes[0]!.retainedObservation!.provenance;
+    assert.equal(original.collectorVersion, "test/1");
+    assert.equal(original.source, "synthetic");
+    assert.equal(result.data.manifest.collectorVersion, "test/2");
+  }
+  const incompatible = structuredClone(input);
+  reject("snapshot", {
+    ...incompatible,
+    manifest: {
+      ...incompatible.manifest,
+      scopes: incompatible.manifest.scopes.map((scope) => ({
+        ...scope, retainedObservation: {
+          ...scope.retainedObservation, provenance: {
+            ...scope.retainedObservation!.provenance, allowlistVersion: "entra-core/0",
+          },
+        },
+      })),
+    },
+  });
+});
+test("a complete new observation cannot reuse old collector provenance", () => {
+  const input = manifest();
+  input.collectorVersion = "test/2";
+  reject("manifest", input, "observation-provenance");
+});
+test("failed or partial attempts must carry an actionable bounded cause", () => {
+  const input = manifest();
+  input.attemptId = "attempt-2";
+  input.createdAt = "2026-10-08T11:12:00Z";
+  input.scopes.forEach((scope) => incompleteScope(scope));
+  input.scopes[0]!.latestAttempt.errorCodes = [];
+  reject("manifest", input, "failure-cause");
 });

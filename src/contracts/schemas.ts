@@ -167,6 +167,11 @@ const observation = z.strictObject({
   attemptId: opaqueId,
   interval,
   resourceCount: z.number().int().nonnegative().max(17500),
+  provenance: z.strictObject({
+    schemaVersion: z.literal(CONTRACT_VERSION), collectorVersion: version,
+    apiVersion: z.literal("graph-v1.0"), allowlistVersion: z.literal(ALLOWLIST_VERSION),
+    source: z.enum(["synthetic", "microsoft-graph"]),
+  }),
   fieldPaths: z.array(opaqueId).max(64),
   unsupportedFieldPaths: z.array(opaqueId).max(256),
 });

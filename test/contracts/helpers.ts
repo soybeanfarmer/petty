@@ -107,6 +107,10 @@ export function manifest(): Manifest {
         attemptId: "attempt-1",
         interval: { start: "2026-10-08T11:00:00Z", end: "2026-10-08T11:05:00Z" },
         resourceCount: 1,
+        provenance: {
+          schemaVersion, collectorVersion: "test/1", apiVersion: "graph-v1.0",
+          allowlistVersion: ALLOWLIST_VERSION, source: "synthetic",
+        },
         fieldPaths: [...scope.fieldPaths],
         unsupportedFieldPaths: [],
       },

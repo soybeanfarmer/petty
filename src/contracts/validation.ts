@@ -129,9 +129,11 @@ function resourceFields(resource: Resource): Record<string, FieldState> {
   );
 }
 function knownEvidence(resource: Resource, fieldPath: string, state: FieldState): boolean {
-  return state.status === "value" || (
-    state.status === "null" && resource.kind === "role-assignment" &&
-    (fieldPath === "properties.appScopeId" || fieldPath === "properties.directoryScopeId")
+  return (
+    state.status === "value" ||
+    (state.status === "null" &&
+      resource.kind === "role-assignment" &&
+      (fieldPath === "properties.appScopeId" || fieldPath === "properties.directoryScopeId"))
   );
 }
 function validateResource(resource: Resource, path: Path, report: Report): void {
@@ -223,12 +225,22 @@ function validateManifest(manifest: Manifest, path: Path, report: Report): void 
         "Complete scope needs a fetched, completed listing without errors and a retained observation.",
       );
     }
+    if (latest.status !== "complete" && latest.errorCodes.length === 0) {
+      report("failure-cause", scopePath, "Incomplete attempts require a bounded cause code.");
+    }
     if (retained === null) return;
     validateInterval(retained.interval, [...scopePath, "retainedObservation", "interval"], report);
     if (retained.resourceCount > limits[scope.scopeId]) {
       report("scope-limit", scopePath, "Retained scope exceeds the declared resource limit.");
     }
     if (latest.status === "complete") {
+      if (retained.provenance.schemaVersion !== manifest.schemaVersion ||
+          retained.provenance.collectorVersion !== manifest.collectorVersion ||
+          retained.provenance.apiVersion !== manifest.apiVersion ||
+          retained.provenance.allowlistVersion !== manifest.allowlistVersion ||
+          retained.provenance.source !== manifest.source) {
+        report("observation-provenance", scopePath, "Latest complete observation must carry this attempt's provenance.");
+      }
       if (
         retained.attemptId !== latest.attemptId ||
         !sameTime(retained.interval.start, latest.interval.start) ||
@@ -597,7 +609,8 @@ function validateBundle(bundle: EvaluationBundle, path: Path, report: Report): v
           );
         } else if (
           current &&
-          (!knownEvidence(resource, item.fieldPath, state) || !observation.fieldPaths.includes(item.fieldPath))
+          (!knownEvidence(resource, item.fieldPath, state) ||
+            !observation.fieldPaths.includes(item.fieldPath))
         ) {
           report(
             "unknown-evidence",

@@ -1,0 +1,431 @@
+{
+  "schemaVersion": "1.0.0",
+  "tenantId": "00000000-0000-4000-8000-000000000001",
+  "snapshot": {
+    "schemaVersion": "1.0.0",
+    "tenantId": "00000000-0000-4000-8000-000000000001",
+    "id": "snapshot/conflicting-assignment-scope",
+    "manifest": {
+      "schemaVersion": "1.0.0",
+      "tenantId": "00000000-0000-4000-8000-000000000001",
+      "id": "manifest/conflicting-assignment-scope",
+      "attemptId": "attempt/conflicting-assignment-scope",
+      "createdAt": "2026-10-07T11:16:00Z",
+      "collectorVersion": "synthetic-fixtures/1",
+      "apiVersion": "graph-v1.0",
+      "allowlistVersion": "entra-core/1",
+      "source": "synthetic",
+      "scopes": [
+        {
+          "scopeId": "conditional-access-policies",
+          "latestAttempt": {
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "status": "complete",
+            "pagesReceived": 1,
+            "paginationComplete": true,
+            "errorCodes": []
+          },
+          "retainedObservation": {
+            "observationId": "obs/conditional-access-policies/conflicting-assignment-scope",
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "resourceCount": 1,
+            "provenance": {
+              "schemaVersion": "1.0.0",
+              "collectorVersion": "synthetic-fixtures/1",
+              "apiVersion": "graph-v1.0",
+              "allowlistVersion": "entra-core/1",
+              "source": "synthetic"
+            },
+            "fieldPaths": [
+              "properties.displayName",
+              "properties.state",
+              "properties.users.includeUsers",
+              "properties.users.excludeUsers",
+              "properties.users.includeGroups",
+              "properties.users.excludeGroups",
+              "properties.users.includeRoles",
+              "properties.users.excludeRoles"
+            ],
+            "unsupportedFieldPaths": ["properties.grantControls", "properties.sessionControls"]
+          }
+        },
+        {
+          "scopeId": "role-assignments",
+          "latestAttempt": {
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "status": "complete",
+            "pagesReceived": 1,
+            "paginationComplete": true,
+            "errorCodes": []
+          },
+          "retainedObservation": {
+            "observationId": "obs/role-assignments/conflicting-assignment-scope",
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "resourceCount": 1,
+            "provenance": {
+              "schemaVersion": "1.0.0",
+              "collectorVersion": "synthetic-fixtures/1",
+              "apiVersion": "graph-v1.0",
+              "allowlistVersion": "entra-core/1",
+              "source": "synthetic"
+            },
+            "fieldPaths": [
+              "properties.principalId",
+              "properties.roleDefinitionId",
+              "properties.directoryScopeId",
+              "properties.appScopeId"
+            ],
+            "unsupportedFieldPaths": []
+          }
+        },
+        {
+          "scopeId": "role-definitions",
+          "latestAttempt": {
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "status": "complete",
+            "pagesReceived": 1,
+            "paginationComplete": true,
+            "errorCodes": []
+          },
+          "retainedObservation": {
+            "observationId": "obs/role-definitions/conflicting-assignment-scope",
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "resourceCount": 1,
+            "provenance": {
+              "schemaVersion": "1.0.0",
+              "collectorVersion": "synthetic-fixtures/1",
+              "apiVersion": "graph-v1.0",
+              "allowlistVersion": "entra-core/1",
+              "source": "synthetic"
+            },
+            "fieldPaths": [
+              "properties.templateId",
+              "properties.displayName",
+              "properties.isBuiltIn",
+              "properties.isEnabled",
+              "properties.version"
+            ],
+            "unsupportedFieldPaths": []
+          }
+        },
+        {
+          "scopeId": "principals",
+          "latestAttempt": {
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "status": "complete",
+            "pagesReceived": 1,
+            "paginationComplete": true,
+            "errorCodes": []
+          },
+          "retainedObservation": {
+            "observationId": "obs/principals/conflicting-assignment-scope",
+            "attemptId": "attempt/conflicting-assignment-scope",
+            "interval": {
+              "start": "2026-10-07T11:10:00Z",
+              "end": "2026-10-07T11:15:00Z"
+            },
+            "resourceCount": 3,
+            "provenance": {
+              "schemaVersion": "1.0.0",
+              "collectorVersion": "synthetic-fixtures/1",
+              "apiVersion": "graph-v1.0",
+              "allowlistVersion": "entra-core/1",
+              "source": "synthetic"
+            },
+            "fieldPaths": ["properties.principalType", "properties.displayName"],
+            "unsupportedFieldPaths": []
+          }
+        }
+      ]
+    },
+    "resources": [
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "kind": "conditional-access-policy",
+        "id": "00000000-0000-4000-8000-000000000100",
+        "observationId": "obs/conditional-access-policies/conflicting-assignment-scope",
+        "properties": {
+          "displayName": {
+            "status": "value",
+            "value": "Required policy (synthetic)"
+          },
+          "state": {
+            "status": "value",
+            "value": "enabled"
+          },
+          "users": {
+            "includeUsers": {
+              "status": "value",
+              "value": [
+                {
+                  "namespace": "symbolic-user",
+                  "id": "All"
+                }
+              ]
+            },
+            "excludeUsers": {
+              "status": "value",
+              "value": [
+                {
+                  "namespace": "directory-object",
+                  "id": "00000000-0000-4000-8000-000000000201"
+                }
+              ]
+            },
+            "includeGroups": {
+              "status": "value",
+              "value": []
+            },
+            "excludeGroups": {
+              "status": "value",
+              "value": []
+            },
+            "includeRoles": {
+              "status": "value",
+              "value": []
+            },
+            "excludeRoles": {
+              "status": "value",
+              "value": []
+            }
+          }
+        }
+      },
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "kind": "role-assignment",
+        "id": "assignment/synthetic-primary",
+        "observationId": "obs/role-assignments/conflicting-assignment-scope",
+        "properties": {
+          "principalId": {
+            "status": "value",
+            "value": "00000000-0000-4000-8000-000000000202"
+          },
+          "roleDefinitionId": {
+            "status": "value",
+            "value": "role-definition/synthetic-protected"
+          },
+          "directoryScopeId": {
+            "status": "value",
+            "value": "/"
+          },
+          "appScopeId": {
+            "status": "value",
+            "value": "/applications/synthetic-app"
+          }
+        }
+      },
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "kind": "role-definition",
+        "id": "role-definition/synthetic-protected",
+        "observationId": "obs/role-definitions/conflicting-assignment-scope",
+        "properties": {
+          "templateId": {
+            "status": "value",
+            "value": "00000000-0000-4000-8000-000000000301"
+          },
+          "displayName": {
+            "status": "value",
+            "value": "Protected built-in role (synthetic)"
+          },
+          "isBuiltIn": {
+            "status": "value",
+            "value": true
+          },
+          "isEnabled": {
+            "status": "value",
+            "value": true
+          },
+          "version": {
+            "status": "value",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "kind": "principal",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "observationId": "obs/principals/conflicting-assignment-scope",
+        "properties": {
+          "principalType": {
+            "status": "value",
+            "value": "user"
+          },
+          "displayName": {
+            "status": "value",
+            "value": "Emergency Operator (synthetic)"
+          }
+        }
+      },
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "kind": "principal",
+        "id": "00000000-0000-4000-8000-000000000202",
+        "observationId": "obs/principals/conflicting-assignment-scope",
+        "properties": {
+          "principalType": {
+            "status": "value",
+            "value": "user"
+          },
+          "displayName": {
+            "status": "value",
+            "value": "Approved Operator (synthetic)"
+          }
+        }
+      },
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "kind": "principal",
+        "id": "00000000-0000-4000-8000-000000000203",
+        "observationId": "obs/principals/conflicting-assignment-scope",
+        "properties": {
+          "principalType": {
+            "status": "value",
+            "value": "group"
+          },
+          "displayName": {
+            "status": "value",
+            "value": "Approved Administrators (synthetic)"
+          }
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "id": "edge/policy-emergency",
+        "kind": "policy-target",
+        "observationId": "obs/conditional-access-policies/conflicting-assignment-scope",
+        "from": {
+          "tenantId": "00000000-0000-4000-8000-000000000001",
+          "namespace": "resource",
+          "kind": "conditional-access-policy",
+          "id": "00000000-0000-4000-8000-000000000100"
+        },
+        "to": {
+          "tenantId": "00000000-0000-4000-8000-000000000001",
+          "namespace": "directory-object",
+          "id": "00000000-0000-4000-8000-000000000201"
+        },
+        "resolution": "resolved",
+        "fieldPath": "properties.users.excludeUsers"
+      },
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "id": "edge/assignment-principal",
+        "kind": "assigned-principal",
+        "observationId": "obs/role-assignments/conflicting-assignment-scope",
+        "from": {
+          "tenantId": "00000000-0000-4000-8000-000000000001",
+          "namespace": "resource",
+          "kind": "role-assignment",
+          "id": "assignment/synthetic-primary"
+        },
+        "to": {
+          "tenantId": "00000000-0000-4000-8000-000000000001",
+          "namespace": "directory-object",
+          "id": "00000000-0000-4000-8000-000000000202"
+        },
+        "resolution": "resolved",
+        "fieldPath": "properties.principalId"
+      },
+      {
+        "schemaVersion": "1.0.0",
+        "tenantId": "00000000-0000-4000-8000-000000000001",
+        "id": "edge/assignment-role",
+        "kind": "assigned-role",
+        "observationId": "obs/role-assignments/conflicting-assignment-scope",
+        "from": {
+          "tenantId": "00000000-0000-4000-8000-000000000001",
+          "namespace": "resource",
+          "kind": "role-assignment",
+          "id": "assignment/synthetic-primary"
+        },
+        "to": {
+          "tenantId": "00000000-0000-4000-8000-000000000001",
+          "namespace": "resource",
+          "kind": "role-definition",
+          "id": "role-definition/synthetic-protected"
+        },
+        "resolution": "resolved",
+        "fieldPath": "properties.roleDefinitionId"
+      }
+    ]
+  },
+  "baseline": {
+    "schemaVersion": "1.0.0",
+    "tenantId": "00000000-0000-4000-8000-000000000001",
+    "id": "baseline/synthetic-approved",
+    "version": "1",
+    "approval": {
+      "operatorId": "fixture-operator",
+      "approvedAt": "2026-10-07T10:00:00Z"
+    },
+    "conditionalAccess": {
+      "requiredPolicyIds": ["00000000-0000-4000-8000-000000000100"],
+      "allowedExclusions": [
+        {
+          "policyId": "00000000-0000-4000-8000-000000000100",
+          "excludeUsers": [
+            {
+              "namespace": "directory-object",
+              "id": "00000000-0000-4000-8000-000000000201"
+            }
+          ],
+          "excludeGroups": [],
+          "excludeRoles": []
+        }
+      ]
+    },
+    "protectedRoles": [
+      {
+        "roleDefinitionId": "role-definition/synthetic-protected",
+        "templateId": "00000000-0000-4000-8000-000000000301",
+        "directoryScopeId": "/",
+        "allowedPrincipalIds": [
+          "00000000-0000-4000-8000-000000000202",
+          "00000000-0000-4000-8000-000000000203"
+        ]
+      }
+    ]
+  },
+  "receipts": []
+}

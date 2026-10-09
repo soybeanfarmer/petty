@@ -96,7 +96,7 @@ Change persisted meaning through a reviewed contract/allowlist version. Old-vers
 
 M03 tests cover strict parsing, unavailable states, tokens/namespaces, duplicate identities, scope conflicts, configured/nested tenant binding, relationship closure, collection failure/retention, count/coverage consistency, precise chronology/freshness, baseline omissions, absence evidence, and receipt provenance/outcome linkage. Existing foundation/CLI checks still run on Linux and Windows.
 
-Minimal test builders exercise contracts. M04 adds reviewed scenario datasets for compliant state, risky changes, missing permissions, partial collection, and malformed inputs. M05 adds an importer; M06 canonicalizes the model; M08 makes deterministic policy decisions.
+Minimal unit-test builders exercise contracts. [M04's saved scenarios](../fixtures/tenant-scenarios/README.md) add reviewed inputs for compliant state, risky changes, missing permissions, partial collection, and malformed data. Their prospective outcomes are specifications, not computed receipts. M05 adds an importer; M06 canonicalizes the model; M08 makes deterministic policy decisions.
 
 ## API references
 

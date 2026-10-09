@@ -1,10 +1,10 @@
 # M01 acceptance cases
 
-These are synthetic behavioral specifications, not executable fixtures or passing tests. M03 defines schemas, M04 creates datasets, and later milestones implement and verify the expected behavior.
+These are synthetic behavioral specifications. M03 implements data contracts; [M04's scenario corpus](../fixtures/tenant-scenarios/README.md) materializes a reviewed subset of the inputs and tests contract acceptance/rejection. Policy outcomes, live collection, change analysis, and other later behaviors remain specifications until their implementation gates.
 
 ## Shared example policy
 
-All names and IDs below are logical synthetic identifiers. M04 will use schema-valid synthetic IDs.
+All names and IDs below are logical synthetic identifiers. M04 maps them to declared schema-valid synthetic IDs in its scenario catalog.
 
 - Tenant `tenant-a` requires `ca-required` to be enabled.
 - `ca-required` allows only `user-emergency` in `excludeUsers`; its approved group and role exclusion sets are empty.
@@ -62,4 +62,4 @@ All names and IDs below are logical synthetic identifiers. M04 will use schema-v
 | Tool decisions and software license                             | Product contract open decisions; [MIT license](../LICENSE)                                      |
 | Compliant, noncompliant, unknown, out-of-scope examples         | A01; A02–A06; A09–A14; A08/A15                                                                  |
 
-Document validation and independent design review complete M01's documentation gate. These examples do not prove API access, runtime safeguards, application tests, or production support.
+Document validation and independent design review complete M01's documentation gate. These examples do not prove API access, live runtime safeguards, policy decisions, or production support. M03 and M04 record their narrower executable validation separately.

@@ -1,6 +1,6 @@
 # Development
 
-Petty contains the repository foundation and shared versioned runtime contracts. The CLI supports help/version only; fixture import, tenant collection, and security checks are later milestones.
+Petty contains the repository foundation, shared versioned runtime contracts, and synthetic scenario datasets. The CLI supports help/version only; fixture import, tenant collection, and security checks are later milestones.
 
 ## Pinned tools
 
@@ -48,7 +48,7 @@ Build before running `npm start` alone. Paths resolve from scripts/modules, not 
 
 Strict TypeScript includes null/implicit-any checks, unchecked indexed access, exact optional properties, and no emission after errors. Expected-error compile guards make typecheck fail if those settings are relaxed. They validate tooling, not future tenant-data contracts.
 
-Five subprocess tests exercise actual compiled help/version/usage behavior outside the checkout with no credential environment. Explicit emitted-test selection avoids running source and compiled tests together. Contract tests exercise strict input parsing and linked evidence consistency. See [data contracts](DATA_CONTRACTS.md) for the public validator and JSON Schema limits. The M01 [acceptance cases](ACCEPTANCE_CASES.md) remain rule/collector specifications; M03 tests do not implement those checks.
+Five subprocess tests exercise actual compiled help/version/usage behavior outside the checkout with no credential environment. Explicit emitted-test selection avoids running source and compiled tests together. Contract tests exercise strict input parsing and linked evidence consistency. Saved-fixture tests read [M04's scenario corpus](../fixtures/tenant-scenarios/README.md), validate the actual files, and protect their defining evidence. Catalog policy outcomes remain specifications until M08 implements the rule engine. See [data contracts](DATA_CONTRACTS.md) for the public validator and JSON Schema limits. The M01 [acceptance cases](ACCEPTANCE_CASES.md) remain rule/collector specifications; M03 tests do not implement those checks.
 
 Prettier owns formatting. TypeScript provides current language checks; ESLint has not been added. A dedicated lint framework can be proposed when specific rules justify it.
 
@@ -64,4 +64,4 @@ Change dependencies with pinned npm, regenerate the lockfile using `npm install 
 
 Use synthetic data only. No `.env`, credentials, tenant export, private key, or production receipt is needed.
 
-M03 defines runtime contracts; M04 creates scenario datasets; M05 imports them. Docker Compose deployment belongs to M24. This foundation does not yet provide container deployment or live monitoring.
+M03 defines runtime contracts; M04 provides saved scenario datasets; M05 adds CLI import. Docker Compose deployment belongs to M24. This foundation does not yet provide container deployment or live monitoring.

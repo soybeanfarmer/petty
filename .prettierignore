@@ -2,3 +2,6 @@ node_modules/
 dist/
 coverage/
 package-lock.json
+
+# Intentionally truncated JSON parser regression input
+fixtures/tenant-scenarios/cases/malformed-json/input.json.txt

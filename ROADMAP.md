@@ -154,3 +154,12 @@ Verify API support, permissions, service limits, and tool versions when implemen
 - [Data contract documentation](docs/DATA_CONTRACTS.md), including remaining authentication, fingerprint, rule, collector, and migration gates.
 
 M03 verification: 51 tests, strict type checks, clean builds, formatting, locked fresh installs, and structural schema export pass on Linux and Windows. Independent contract/API reviews found no remaining blockers. Execution evidence is recorded in the milestone PR. Minimal test builders do not replace M04's reviewed scenario datasets. The help/version CLI is unchanged.
+
+## Milestone 4 deliverables
+
+- [Synthetic tenant corpus](fixtures/tenant-scenarios/README.md): 25 self-contained scenarios, with 18 contract-valid inputs and seven rejection cases.
+- A versioned scenario catalog maps evidence to M01 acceptance cases, explicit evaluation time, contract validation expectations, and prospective outcomes for the three initial checks.
+- Saved-file tests verify contract acceptance/rejection, declared rejection stage/classification, exact catalog/file coverage, unchanged approvals on risky changes, retained history/provenance, empty versus omitted approvals, mixed-age evidence, tenant binding, and literal untrusted labels.
+- No generated decisions, findings, fingerprints, credentials, or live tenant data. The help/version CLI is unchanged.
+
+M04 verification is pending in the milestone PR. Policy outcomes remain M08 specifications; M05 is the next implementation gate for CLI fixture import.

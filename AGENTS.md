@@ -2,7 +2,7 @@
 
 ## Project state
 
-Petty has the repository foundation and versioned data contracts; tenant collection and security checks are not implemented yet. The accepted base architecture is TypeScript on Node.js LTS, packaged with Docker; Docker Compose is the initial self-hosted target, and Azure Container Apps/Jobs are the later managed target.
+Petty has the repository foundation, versioned data contracts, and synthetic scenario datasets; tenant collection and security checks are not implemented yet. The accepted base architecture is TypeScript on Node.js LTS, packaged with Docker; Docker Compose is the initial self-hosted target, and Azure Container Apps/Jobs are the later managed target.
 
 The source-code license is MIT. Tooling is pinned in package.json, package-lock.json, and .node-version; see docs/DEVELOPMENT.md and ADR 0003. Database, API/UI framework, and AI provider remain open. Do not treat examples from conversation or proposed architecture as accepted implementation choices.
 
@@ -32,6 +32,7 @@ Read README.md, ROADMAP.md, docs/ARCHITECTURE.md, docs/PRODUCT_CONTRACT.md, docs
 - Historical evaluation uses explicit versions and time/reference context.
 - Use validateContract with the configured tenant ID at ingestion; validate snapshots/bundles for linked context. Individual parsing and structural JSON Schema do not prove evidence closure or currentness.
 - Contract-valid approvals/hashes are assertions; verify authorization, canonical fingerprints, and rule correctness at their implementation gates.
+- M04's catalog outcomes are reviewed rule specifications; passing fixture validation does not prove those decisions. Tests read saved inputs directly, and rejected inputs carry no policy outcomes.
 - Read-only tenant access is separate from Git publishing and operational-state writes.
 - Active remediation is outside the monitor's current scope.
 

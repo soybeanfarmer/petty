@@ -27,9 +27,7 @@
             "status": "failed",
             "pagesReceived": 0,
             "paginationComplete": false,
-            "errorCodes": [
-              "permission-denied"
-            ]
+            "errorCodes": ["permission-denied"]
           },
           "retainedObservation": null
         },
@@ -136,10 +134,7 @@
               "allowlistVersion": "entra-core/1",
               "source": "synthetic"
             },
-            "fieldPaths": [
-              "properties.principalType",
-              "properties.displayName"
-            ],
+            "fieldPaths": ["properties.principalType", "properties.displayName"],
             "unsupportedFieldPaths": []
           }
         }
@@ -305,9 +300,7 @@
       "approvedAt": "2026-10-07T10:00:00Z"
     },
     "conditionalAccess": {
-      "requiredPolicyIds": [
-        "00000000-0000-4000-8000-000000000100"
-      ],
+      "requiredPolicyIds": ["00000000-0000-4000-8000-000000000100"],
       "allowedExclusions": [
         {
           "policyId": "00000000-0000-4000-8000-000000000100",

@@ -54,10 +54,7 @@
               "properties.users.includeRoles",
               "properties.users.excludeRoles"
             ],
-            "unsupportedFieldPaths": [
-              "properties.grantControls",
-              "properties.sessionControls"
-            ]
+            "unsupportedFieldPaths": ["properties.grantControls", "properties.sessionControls"]
           }
         },
         {
@@ -163,10 +160,7 @@
               "allowlistVersion": "entra-core/1",
               "source": "synthetic"
             },
-            "fieldPaths": [
-              "properties.principalType",
-              "properties.displayName"
-            ],
+            "fieldPaths": ["properties.principalType", "properties.displayName"],
             "unsupportedFieldPaths": []
           }
         }

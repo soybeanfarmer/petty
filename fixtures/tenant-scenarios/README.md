@@ -31,18 +31,18 @@ Tests read the checked-in files directly; they do not generate the inputs or run
 
 The frozen evaluation time is `2026-10-07T12:00:00Z`, with a 7,200-second freshness limit. It does not follow the current clock. The compliant observation runs from 11:00 to 11:05; ordinary comparison observations run from 11:10 to 11:15. The stale policy observation starts at 09:59. Each scope keeps its own interval.
 
-| Identity | Synthetic ID |
-| --- | --- |
-| Configured tenant | `00000000-0000-4000-8000-000000000001` |
+| Identity                   | Synthetic ID                           |
+| -------------------------- | -------------------------------------- |
+| Configured tenant          | `00000000-0000-4000-8000-000000000001` |
 | Other tenant for rejection | `00000000-0000-4000-8000-000000000002` |
-| Required policy | `00000000-0000-4000-8000-000000000100` |
-| Emergency user | `00000000-0000-4000-8000-000000000201` |
-| Approved user | `00000000-0000-4000-8000-000000000202` |
-| Approved group | `00000000-0000-4000-8000-000000000203` |
-| Unapproved user | `00000000-0000-4000-8000-000000000204` |
-| Protected role definition | `role-definition/synthetic-protected` |
-| Role template | `00000000-0000-4000-8000-000000000301` |
-| Primary assignment | `assignment/synthetic-primary` |
+| Required policy            | `00000000-0000-4000-8000-000000000100` |
+| Emergency user             | `00000000-0000-4000-8000-000000000201` |
+| Approved user              | `00000000-0000-4000-8000-000000000202` |
+| Approved group             | `00000000-0000-4000-8000-000000000203` |
+| Unapproved user            | `00000000-0000-4000-8000-000000000204` |
+| Protected role definition  | `role-definition/synthetic-protected`  |
+| Role template              | `00000000-0000-4000-8000-000000000301` |
+| Primary assignment         | `assignment/synthetic-primary`         |
 
 The synthetic baseline requires the policy to be enabled, approves only the emergency user as an explicit user exclusion, approves empty group/role exclusion sets, and permits direct tenant-wide assignment of the protected role to the approved user or group. This is a test policy, not recommended tenant hardening or a real authorization record. Template IDs and built-in flags are synthetic assertions, not claims of membership in Microsoft's role catalog.
 
@@ -54,33 +54,33 @@ Partial/failed retained cases keep the compliant scope's exact original resource
 
 The expected outcomes below are reviewed specifications for M08's three narrow predicates. M04 does not verify those decisions. Pass does not establish effective MFA, comprehensive compliance, group membership, or effective privilege. Not applicable is not a security endorsement. Unspecified checks are deliberately omitted.
 
-| Scenario input | M01 cases | Contract expectation | Prospective checks |
-| --- | --- | --- | --- |
-| [compliant](cases/compliant/input.json) | A01 | accept | state: pass; exclusions: pass; role: pass |
-| [approved-group-assignment](cases/approved-group-assignment/input.json) | A07 | accept | state: pass; exclusions: pass; role: pass |
-| [disabled-required-policy](cases/disabled-required-policy/input.json) | A02 | accept | state: fail; exclusions: pass; role: pass |
-| [report-only-required-policy](cases/report-only-required-policy/input.json) | A03 | accept | state: fail; exclusions: pass; role: pass |
-| [required-policy-absent](cases/required-policy-absent/input.json) | A04 | accept | state: fail; role: pass |
-| [unexpected-user-exclusion](cases/unexpected-user-exclusion/input.json) | A05 | accept | state: pass; exclusions: fail; role: pass |
-| [unapproved-role-assignment](cases/unapproved-role-assignment/input.json) | A06 | accept | state: pass; exclusions: pass; role: fail |
-| [scoped-role-assignment](cases/scoped-role-assignment/input.json) | A08 | accept | state: pass; exclusions: pass; role: not-applicable |
-| [partial-policy-retained](cases/partial-policy-retained/input.json) | A09 | accept | state: unknown; exclusions: unknown; role: pass |
-| [permission-denied-no-policy-history](cases/permission-denied-no-policy-history/input.json) | A09, A10 | accept | state: unknown; exclusions: unknown; role: pass |
-| [failed-role-retained](cases/failed-role-retained/input.json) | A10, A12 | accept | state: pass; exclusions: pass; role: unknown |
-| [stale-policy-scope](cases/stale-policy-scope/input.json) | A11 | accept | state: unknown; exclusions: unknown; role: pass |
-| [omitted-exclusion-approval](cases/omitted-exclusion-approval/input.json) | A13 | accept | state: pass; exclusions: unknown; role: pass |
-| [missing-baseline](cases/missing-baseline/input.json) | A13 | accept | state: unknown; exclusions: unknown; role: unknown |
-| [unsupported-policy-state](cases/unsupported-policy-state/input.json) | A13, A21 | accept | state: unknown; exclusions: pass; role: pass |
-| [optional-label-unavailable](cases/optional-label-unavailable/input.json) | A14 | accept | state: pass; exclusions: pass; role: pass |
-| [empty-approved-exclusions](cases/empty-approved-exclusions/input.json) | A13 | accept | state: pass; exclusions: fail; role: pass |
-| [untrusted-display-name](cases/untrusted-display-name/input.json) | A20 | accept | state: pass; exclusions: pass; role: pass |
-| [duplicate-resource-id](cases/duplicate-resource-id/input.json) | A21 | reject-contract | No policy decision |
-| [nested-tenant-mismatch](cases/nested-tenant-mismatch/input.json) | A19 | reject-contract | No policy decision |
-| [configured-tenant-mismatch](cases/configured-tenant-mismatch/input.json) | A19 | reject-contract | No policy decision |
-| [conflicting-assignment-scope](cases/conflicting-assignment-scope/input.json) | A21 | reject-contract | No policy decision |
-| [raw-unknown-policy-state](cases/raw-unknown-policy-state/input.json) | A21 | reject-contract | No policy decision |
-| [unsupported-contract-version](cases/unsupported-contract-version/input.json) | A18, A21 | reject-contract | No policy decision |
-| [malformed-json](cases/malformed-json/input.json.txt) | A21 | reject-json | No policy decision |
+| Scenario input                                                                              | M01 cases | Contract expectation | Prospective checks                                  |
+| ------------------------------------------------------------------------------------------- | --------- | -------------------- | --------------------------------------------------- |
+| [compliant](cases/compliant/input.json)                                                     | A01       | accept               | state: pass; exclusions: pass; role: pass           |
+| [approved-group-assignment](cases/approved-group-assignment/input.json)                     | A07       | accept               | state: pass; exclusions: pass; role: pass           |
+| [disabled-required-policy](cases/disabled-required-policy/input.json)                       | A02       | accept               | state: fail; exclusions: pass; role: pass           |
+| [report-only-required-policy](cases/report-only-required-policy/input.json)                 | A03       | accept               | state: fail; exclusions: pass; role: pass           |
+| [required-policy-absent](cases/required-policy-absent/input.json)                           | A04       | accept               | state: fail; role: pass                             |
+| [unexpected-user-exclusion](cases/unexpected-user-exclusion/input.json)                     | A05       | accept               | state: pass; exclusions: fail; role: pass           |
+| [unapproved-role-assignment](cases/unapproved-role-assignment/input.json)                   | A06       | accept               | state: pass; exclusions: pass; role: fail           |
+| [scoped-role-assignment](cases/scoped-role-assignment/input.json)                           | A08       | accept               | state: pass; exclusions: pass; role: not-applicable |
+| [partial-policy-retained](cases/partial-policy-retained/input.json)                         | A09       | accept               | state: unknown; exclusions: unknown; role: pass     |
+| [permission-denied-no-policy-history](cases/permission-denied-no-policy-history/input.json) | A09, A10  | accept               | state: unknown; exclusions: unknown; role: pass     |
+| [failed-role-retained](cases/failed-role-retained/input.json)                               | A10, A12  | accept               | state: pass; exclusions: pass; role: unknown        |
+| [stale-policy-scope](cases/stale-policy-scope/input.json)                                   | A11       | accept               | state: unknown; exclusions: unknown; role: pass     |
+| [omitted-exclusion-approval](cases/omitted-exclusion-approval/input.json)                   | A13       | accept               | state: pass; exclusions: unknown; role: pass        |
+| [missing-baseline](cases/missing-baseline/input.json)                                       | A13       | accept               | state: unknown; exclusions: unknown; role: unknown  |
+| [unsupported-policy-state](cases/unsupported-policy-state/input.json)                       | A13, A21  | accept               | state: unknown; exclusions: pass; role: pass        |
+| [optional-label-unavailable](cases/optional-label-unavailable/input.json)                   | A14       | accept               | state: pass; exclusions: pass; role: pass           |
+| [empty-approved-exclusions](cases/empty-approved-exclusions/input.json)                     | A13       | accept               | state: pass; exclusions: fail; role: pass           |
+| [untrusted-display-name](cases/untrusted-display-name/input.json)                           | A20       | accept               | state: pass; exclusions: pass; role: pass           |
+| [duplicate-resource-id](cases/duplicate-resource-id/input.json)                             | A21       | reject-contract      | No policy decision                                  |
+| [nested-tenant-mismatch](cases/nested-tenant-mismatch/input.json)                           | A19       | reject-contract      | No policy decision                                  |
+| [configured-tenant-mismatch](cases/configured-tenant-mismatch/input.json)                   | A19       | reject-contract      | No policy decision                                  |
+| [conflicting-assignment-scope](cases/conflicting-assignment-scope/input.json)               | A21       | reject-contract      | No policy decision                                  |
+| [raw-unknown-policy-state](cases/raw-unknown-policy-state/input.json)                       | A21       | reject-contract      | No policy decision                                  |
+| [unsupported-contract-version](cases/unsupported-contract-version/input.json)               | A18, A21  | reject-contract      | No policy decision                                  |
+| [malformed-json](cases/malformed-json/input.json.txt)                                       | A21       | reject-json          | No policy decision                                  |
 
 ## Boundaries and maintenance
 

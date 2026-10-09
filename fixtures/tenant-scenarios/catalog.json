@@ -12,9 +12,7 @@
       "id": "compliant",
       "category": "compliant",
       "description": "A complete, fresh synthetic tenant meets the three narrow approved predicates.",
-      "acceptanceCases": [
-        "A01"
-      ],
+      "acceptanceCases": ["A01"],
       "validation": {
         "result": "accept"
       },
@@ -58,9 +56,7 @@
       "id": "approved-group-assignment",
       "category": "compliant",
       "description": "The protected role is assigned directly to the approved group; no member expansion or effective privilege claim.",
-      "acceptanceCases": [
-        "A07"
-      ],
+      "acceptanceCases": ["A07"],
       "validation": {
         "result": "accept"
       },
@@ -105,9 +101,7 @@
       "id": "disabled-required-policy",
       "category": "risky-change",
       "description": "The previously enabled required policy is now disabled. The approved baseline is unchanged.",
-      "acceptanceCases": [
-        "A02"
-      ],
+      "acceptanceCases": ["A02"],
       "validation": {
         "result": "accept"
       },
@@ -152,9 +146,7 @@
       "id": "report-only-required-policy",
       "category": "risky-change",
       "description": "Report-only does not meet the baseline's enabled-state predicate.",
-      "acceptanceCases": [
-        "A03"
-      ],
+      "acceptanceCases": ["A03"],
       "validation": {
         "result": "accept"
       },
@@ -199,9 +191,7 @@
       "id": "required-policy-absent",
       "category": "risky-change",
       "description": "The policy is absent from a completed fresh listing. This is different from a failed or partial listing.",
-      "acceptanceCases": [
-        "A04"
-      ],
+      "acceptanceCases": ["A04"],
       "validation": {
         "result": "accept"
       },
@@ -235,9 +225,7 @@
       "id": "unexpected-user-exclusion",
       "category": "risky-change",
       "description": "A new direct user exclusion is outside the approved user set; policy state and role approvals remain unchanged.",
-      "acceptanceCases": [
-        "A05"
-      ],
+      "acceptanceCases": ["A05"],
       "validation": {
         "result": "accept"
       },
@@ -282,9 +270,7 @@
       "id": "unapproved-role-assignment",
       "category": "risky-change",
       "description": "The same protected tenant-wide role is assigned to an unapproved principal without changing the baseline.",
-      "acceptanceCases": [
-        "A06"
-      ],
+      "acceptanceCases": ["A06"],
       "validation": {
         "result": "accept"
       },
@@ -329,9 +315,7 @@
       "id": "scoped-role-assignment",
       "category": "unsupported",
       "description": "Administrative-unit scope lies outside the initial tenant-wide protected-role predicate. Not applicable is not a security endorsement.",
-      "acceptanceCases": [
-        "A08"
-      ],
+      "acceptanceCases": ["A08"],
       "validation": {
         "result": "accept"
       },
@@ -376,9 +360,7 @@
       "id": "partial-policy-retained",
       "category": "collection-gap",
       "description": "A newer policy listing fails after one page. The canonical snapshot retains the earlier complete policy and original provenance; no deletion is inferred.",
-      "acceptanceCases": [
-        "A09"
-      ],
+      "acceptanceCases": ["A09"],
       "validation": {
         "result": "accept"
       },
@@ -423,10 +405,7 @@
       "id": "permission-denied-no-policy-history",
       "category": "collection-gap",
       "description": "The first policy attempt is denied and has no trustworthy observation. There is no fabricated empty successful listing.",
-      "acceptanceCases": [
-        "A09",
-        "A10"
-      ],
+      "acceptanceCases": ["A09", "A10"],
       "validation": {
         "result": "accept"
       },
@@ -470,10 +449,7 @@
       "id": "failed-role-retained",
       "category": "collection-gap",
       "description": "Policy scopes complete, but a newer role attempt is denied. Older role evidence remains historical while policy-only checks can proceed.",
-      "acceptanceCases": [
-        "A10",
-        "A12"
-      ],
+      "acceptanceCases": ["A10", "A12"],
       "validation": {
         "result": "accept"
       },
@@ -518,9 +494,7 @@
       "id": "stale-policy-scope",
       "category": "collection-gap",
       "description": "The policy scope originally started at 09:59, making it older than the 120-minute limit at the explicit noon evaluation time.",
-      "acceptanceCases": [
-        "A11"
-      ],
+      "acceptanceCases": ["A11"],
       "validation": {
         "result": "accept"
       },
@@ -564,9 +538,7 @@
       "id": "omitted-exclusion-approval",
       "category": "baseline-gap",
       "description": "An exclusion approval set is absent, not an approved empty set. Only the dependent exclusion predicate is unknown.",
-      "acceptanceCases": [
-        "A13"
-      ],
+      "acceptanceCases": ["A13"],
       "validation": {
         "result": "accept"
       },
@@ -610,9 +582,7 @@
       "id": "missing-baseline",
       "category": "baseline-gap",
       "description": "No approved policy is supplied. Observations cannot approve themselves.",
-      "acceptanceCases": [
-        "A13"
-      ],
+      "acceptanceCases": ["A13"],
       "validation": {
         "result": "accept"
       },
@@ -656,10 +626,7 @@
       "id": "unsupported-policy-state",
       "category": "unsupported",
       "description": "An unavailable state is deliberately represented as unsupported rather than raw unknown enum input; targeting remains usable.",
-      "acceptanceCases": [
-        "A13",
-        "A21"
-      ],
+      "acceptanceCases": ["A13", "A21"],
       "validation": {
         "result": "accept"
       },
@@ -703,9 +670,7 @@
       "id": "optional-label-unavailable",
       "category": "collection-gap",
       "description": "Referenced principal IDs and types are available, but display labels are permission-denied. Identity approvals use IDs.",
-      "acceptanceCases": [
-        "A14"
-      ],
+      "acceptanceCases": ["A14"],
       "validation": {
         "result": "accept"
       },
@@ -749,9 +714,7 @@
       "id": "empty-approved-exclusions",
       "category": "baseline-gap",
       "description": "Explicit empty approved exclusion sets forbid every member. The observed emergency-user exclusion is a violation, not missing approval.",
-      "acceptanceCases": [
-        "A13"
-      ],
+      "acceptanceCases": ["A13"],
       "validation": {
         "result": "accept"
       },
@@ -795,9 +758,7 @@
       "id": "untrusted-display-name",
       "category": "untrusted-data",
       "description": "A synthetic label contains markup, shell syntax, path-like text, and instructions. It remains literal data; output escaping belongs to later reporters.",
-      "acceptanceCases": [
-        "A20"
-      ],
+      "acceptanceCases": ["A20"],
       "validation": {
         "result": "accept"
       },
@@ -841,14 +802,10 @@
       "id": "duplicate-resource-id",
       "category": "malformed",
       "description": "Two policy resources claim the same stable identity.",
-      "acceptanceCases": [
-        "A21"
-      ],
+      "acceptanceCases": ["A21"],
       "validation": {
         "result": "reject-contract",
-        "issueCodes": [
-          "duplicate"
-        ]
+        "issueCodes": ["duplicate"]
       },
       "expectedChecks": []
     },
@@ -856,14 +813,10 @@
       "id": "nested-tenant-mismatch",
       "category": "malformed",
       "description": "A nested resource claims another synthetic tenant.",
-      "acceptanceCases": [
-        "A19"
-      ],
+      "acceptanceCases": ["A19"],
       "validation": {
         "result": "reject-contract",
-        "issueCodes": [
-          "tenant-mismatch"
-        ]
+        "issueCodes": ["tenant-mismatch"]
       },
       "expectedChecks": []
     },
@@ -871,14 +824,10 @@
       "id": "configured-tenant-mismatch",
       "category": "malformed",
       "description": "Every nested tenant is consistent with tenant B, but ingestion is bound to synthetic tenant A.",
-      "acceptanceCases": [
-        "A19"
-      ],
+      "acceptanceCases": ["A19"],
       "validation": {
         "result": "reject-contract",
-        "issueCodes": [
-          "tenant-mismatch"
-        ]
+        "issueCodes": ["tenant-mismatch"]
       },
       "expectedChecks": []
     },
@@ -886,14 +835,10 @@
       "id": "conflicting-assignment-scope",
       "category": "malformed",
       "description": "An assignment claims both a directory scope and an application scope.",
-      "acceptanceCases": [
-        "A21"
-      ],
+      "acceptanceCases": ["A21"],
       "validation": {
         "result": "reject-contract",
-        "issueCodes": [
-          "scope-conflict"
-        ]
+        "issueCodes": ["scope-conflict"]
       },
       "expectedChecks": []
     },
@@ -901,14 +846,10 @@
       "id": "raw-unknown-policy-state",
       "category": "malformed",
       "description": "A raw future enum is malformed; the accepted unsupported wrapper scenario is separate.",
-      "acceptanceCases": [
-        "A21"
-      ],
+      "acceptanceCases": ["A21"],
       "validation": {
         "result": "reject-contract",
-        "issueCodes": [
-          "structure:invalid_value"
-        ]
+        "issueCodes": ["structure:invalid_value"]
       },
       "expectedChecks": []
     },
@@ -916,15 +857,10 @@
       "id": "unsupported-contract-version",
       "category": "malformed",
       "description": "The bundle declares an unsupported persisted contract version; no automatic migration is supported.",
-      "acceptanceCases": [
-        "A18",
-        "A21"
-      ],
+      "acceptanceCases": ["A18", "A21"],
       "validation": {
         "result": "reject-contract",
-        "issueCodes": [
-          "structure:invalid_value"
-        ]
+        "issueCodes": ["structure:invalid_value"]
       },
       "expectedChecks": []
     },
@@ -932,9 +868,7 @@
       "id": "malformed-json",
       "category": "malformed",
       "description": "Truncated synthetic JSON is rejected before contract validation.",
-      "acceptanceCases": [
-        "A21"
-      ],
+      "acceptanceCases": ["A21"],
       "validation": {
         "result": "reject-json"
       },

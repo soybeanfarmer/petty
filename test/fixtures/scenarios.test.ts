@@ -140,11 +140,16 @@ test("scenario catalog is complete, bounded to three check specifications, and s
     if (scenario.validation.result === "accept") {
       const saved = await input(scenario.id);
       for (const check of scenario.expectedChecks) {
-        const present = saved.snapshot.resources.some((entry) =>
-          entry.kind === check.subject.kind && entry.id === check.subject.id);
-        const requiredAbsentPolicy = check.subject.kind === "conditional-access-policy" &&
+        const present = saved.snapshot.resources.some(
+          (entry) => entry.kind === check.subject.kind && entry.id === check.subject.id,
+        );
+        const requiredAbsentPolicy =
+          check.subject.kind === "conditional-access-policy" &&
           saved.baseline?.conditionalAccess?.requiredPolicyIds.includes(check.subject.id);
-        assert.ok(present || requiredAbsentPolicy, "Catalog subject must identify observed or explicitly required evidence.");
+        assert.ok(
+          present || requiredAbsentPolicy,
+          "Catalog subject must identify observed or explicitly required evidence.",
+        );
       }
     }
     if (scenario.comparisonTo) {
@@ -365,26 +370,44 @@ test("compliant fixture preserves the literal approved synthetic policy and dire
   assert.deepEqual(policy.properties.users.excludeRoles, { status: "value", value: [] });
   assert.deepEqual(saved.baseline!.conditionalAccess, {
     requiredPolicyIds: [policy.id],
-    allowedExclusions: [{ policyId: policy.id, excludeUsers: [emergency], excludeGroups: [], excludeRoles: [] }],
+    allowedExclusions: [
+      { policyId: policy.id, excludeUsers: [emergency], excludeGroups: [], excludeRoles: [] },
+    ],
   });
   const assignment = resource(saved, "role-assignment");
   assert.equal(assignment.id, "assignment/synthetic-primary");
   assert.deepEqual(assignment.properties, {
     principalId: { status: "value", value: "00000000-0000-4000-8000-000000000202" },
     roleDefinitionId: { status: "value", value: "role-definition/synthetic-protected" },
-    directoryScopeId: { status: "value", value: "/" }, appScopeId: { status: "null" },
+    directoryScopeId: { status: "value", value: "/" },
+    appScopeId: { status: "null" },
   });
   const definition = resource(saved, "role-definition");
   assert.equal(definition.id, "role-definition/synthetic-protected");
-  assert.deepEqual(definition.properties.templateId, { status: "value", value: "00000000-0000-4000-8000-000000000301" });
+  assert.deepEqual(definition.properties.templateId, {
+    status: "value",
+    value: "00000000-0000-4000-8000-000000000301",
+  });
   assert.deepEqual(definition.properties.isBuiltIn, { status: "value", value: true });
   assert.deepEqual(definition.properties.isEnabled, { status: "value", value: true });
-  assert.deepEqual(saved.baseline!.protectedRoles, [{
-    roleDefinitionId: definition.id, templateId: "00000000-0000-4000-8000-000000000301",
-    directoryScopeId: "/", allowedPrincipalIds: [
-      "00000000-0000-4000-8000-000000000202", "00000000-0000-4000-8000-000000000203",
-    ],
-  }]);
-  const emptyApproval = resource(await input("empty-approved-exclusions"), "conditional-access-policy");
-  assert.deepEqual(emptyApproval.properties, policy.properties, "Only approved state changes in the empty-approval case; the observed exclusion remains present.");
+  assert.deepEqual(saved.baseline!.protectedRoles, [
+    {
+      roleDefinitionId: definition.id,
+      templateId: "00000000-0000-4000-8000-000000000301",
+      directoryScopeId: "/",
+      allowedPrincipalIds: [
+        "00000000-0000-4000-8000-000000000202",
+        "00000000-0000-4000-8000-000000000203",
+      ],
+    },
+  ]);
+  const emptyApproval = resource(
+    await input("empty-approved-exclusions"),
+    "conditional-access-policy",
+  );
+  assert.deepEqual(
+    emptyApproval.properties,
+    policy.properties,
+    "Only approved state changes in the empty-approval case; the observed exclusion remains present.",
+  );
 });

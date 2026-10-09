@@ -15,9 +15,9 @@ Petty is being designed to check supported tenant configuration against approved
 
 ## Project status
 
-**Data contracts.** This repository contains product documents, TypeScript tooling, shared runtime contracts, and a help/version-only CLI. Synthetic scenario datasets are available for offline development. Tenant collection, security checks, and production deployment are not implemented yet.
+**Synthetic datasets.** This repository contains product documents, TypeScript tooling, shared runtime contracts, and a help/version-only CLI. Synthetic scenario datasets are available for offline development. Tenant collection, security checks, and production deployment are not implemented yet.
 
-Milestones 0 through 3 are complete: architecture, product scope, threat model, TypeScript foundation, and shared versioned data contracts. M04 adds synthetic tenant scenario datasets; verification is recorded in its PR. We will build one milestone at a time, with reviewable changes and explicit completion gates.
+Milestones 0 through 4 are complete: architecture, product scope, threat model, TypeScript foundation, shared versioned data contracts, and synthetic scenario datasets. Next is M05: Clerk's CLI fixture importer. We will build one milestone at a time, with reviewable changes and explicit completion gates.
 
 The first prototype will use synthetic snapshots of Conditional Access policies, protected role assignments, and the identities needed to interpret them. Coverage will be documented per resource and property. A supported resource is not a claim that Petty can export, restore, or inspect an entire tenant.
 

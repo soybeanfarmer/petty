@@ -11,7 +11,7 @@ This is the agreed path from an empty repository to a production-grade monitor a
 - Keep the product within its documented support scope. Production readiness does not require every Microsoft resource or every future feature.
 - Define measurable operating and recovery targets before assessing production readiness.
 
-**Status key:** complete, pending. Milestones 0 through 4 are complete. This document is a plan, not evidence that the described capabilities exist.
+**Status key:** complete, pending. Milestones 0 through 5 are complete. This document is a plan, not evidence that the described capabilities exist.
 
 ## Foundation and offline prototype
 
@@ -22,7 +22,7 @@ This is the agreed path from an empty repository to a production-grade monitor a
 | M02 | Repository foundation                   | Reproducible installation, strict TypeScript checks, formatting, tests, CI, and contribution process. Pin supported tooling and dependencies.                                                                 | Complete |
 | M03 | Shared data contracts                   | Versioned schemas for resources, relationships, collection manifests, baselines, findings, and receipts.                                                                                                      | Complete |
 | M04 | Synthetic tenant fixtures               | Small datasets demonstrate compliant settings, risky changes, missing permissions, partial collection, and malformed input.                                                                                   | Complete |
-| M05 | Clerk: snapshot importer                | Import and validate fixture data through a CLI. Invalid or unsupported data produces explicit errors.                                                                                                         | Pending  |
+| M05 | Clerk: snapshot importer                | Import and validate fixture data through a CLI. Invalid or unsupported data produces explicit errors.                                                                                                         | Complete |
 | M06 | Ledger: canonical tenant model          | Stable IDs, predictable serialization, configuration fingerprints, and relationships. Reordered set-like input produces identical configuration output while semantically ordered lists retain their meaning. | Pending  |
 | M07 | Ground Rules: approved baselines        | Define required settings and allowed access. Observed state and approved state remain separate.                                                                                                               | Pending  |
 | M08 | Inspector: first deterministic checks   | Detect a disabled required policy, unexpected exclusions, and an unapproved protected role assignment. Distinguish pass, fail, unknown, and not applicable.                                                   | Pending  |
@@ -162,4 +162,14 @@ M03 verification: 51 tests, strict type checks, clean builds, formatting, locked
 - Saved-file tests verify contract acceptance/rejection, declared rejection stage/classification, exact catalog/file coverage, unchanged approvals on risky changes, retained history/provenance, empty versus omitted approvals, mixed-age evidence, tenant binding, and literal untrusted labels.
 - No generated decisions, findings, fingerprints, credentials, or live tenant data. The help/version CLI is unchanged.
 
-M04 verification: all 88 tests, formatting, strict types, clean builds, locked fresh installs, structural schema export, and unchanged tracked checkout pass on Linux and Windows. Internal links and independent scenario/test review are complete; execution evidence is recorded in the milestone PR. Policy outcomes remain M08 specifications; M05 is the next implementation gate for CLI fixture import.
+M04 verification: all 88 tests, formatting, strict types, clean builds, locked fresh installs, structural schema export, and unchanged tracked checkout pass on Linux and Windows. Internal links and independent scenario/test review are complete; execution evidence is recorded in the milestone PR. Policy outcomes remain M08 specifications; M05 implements CLI fixture import; M06 is the next implementation gate for canonicalization.
+
+## Milestone 5 deliverables
+
+- [Clerk offline import](docs/IMPORT.md) for closed snapshots and evaluation bundles, with explicit configured-tenant binding.
+- Regular local-file input with 8 MiB/64-level limits, strict UTF-8 JSON, and duplicate-key rejection.
+- Bounded JSON summaries expose incomplete scopes, retained original intervals, unavailable fields, baseline presence, and counts without security judgments or tenant-controlled labels.
+- Sanitized JSON diagnostics and documented exit codes; no writes, network requests, canonicalization, or policy execution.
+- Compiled CLI tests cover all 25 saved scenarios and the import boundary on Linux and Windows.
+
+M05 verification is recorded in the milestone PR. M06 remains pending.

@@ -1,6 +1,6 @@
 # Development
 
-Petty contains the repository foundation, shared versioned runtime contracts, and synthetic scenario datasets. The CLI supports help/version only; fixture import, tenant collection, and security checks are later milestones.
+Petty contains the repository foundation, shared versioned runtime contracts, and synthetic scenario datasets. The CLI supports help/version and tenant-bound local fixture import. Tenant collection and security checks are later milestones. See [Clerk import](IMPORT.md) for usage, limits, and error codes.
 
 ## Pinned tools
 
@@ -64,4 +64,4 @@ Change dependencies with pinned npm, regenerate the lockfile using `npm install 
 
 Use synthetic data only. No `.env`, credentials, tenant export, private key, or production receipt is needed.
 
-M03 defines runtime contracts; M04 provides saved scenario datasets; M05 adds CLI import. Docker Compose deployment belongs to M24. This foundation does not yet provide container deployment or live monitoring.
+M03 defines runtime contracts; M04 provides saved scenario datasets; M05 provides CLI import. M06 adds canonicalization and fingerprints. Docker Compose deployment belongs to M24. This foundation does not yet provide container deployment or live monitoring.

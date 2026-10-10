@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This document records the intended architecture. The repository has shared versioned data contracts and a help/version-only CLI; tenant-monitor modules and deployment are not implemented yet.
+This document records the intended architecture. The repository has shared versioned data contracts and a tenant-bound offline CLI importer. Live collection, security checks, and deployment are not implemented yet. [Clerk import](IMPORT.md) is the first implemented source boundary; it validates saved inputs without publication or evaluation.
 
 Petty is one modular TypeScript application, initially executed on Node.js LTS and packaged in Docker. The first release targets a single organization's self-hosted monitor. Azure Container Apps and Container Apps Jobs are the later managed deployment target.
 

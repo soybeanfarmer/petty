@@ -26,13 +26,13 @@ Display names, opaque identifiers, raw resource values, error-code values, basel
 
 Failures write one JSON object to stderr, with no stdout summary:
 
-| Exit | Stage | Meaning |
-| --- | --- | --- |
-| 0 | accepted | Validated import; no security judgment |
-| 2 | usage | Invalid options, missing tenant/file, invalid tenant, unsupported kind/operation |
-| 3 | json or contract | Invalid encoding/JSON, excessive nesting, duplicate keys, schema/version mismatch, or linked invariant failure |
-| 4 | file | Unavailable/nonregular file, unsupported path, size limit, or observed file change |
-| 1 | internal | Unexpected implementation failure |
+| Exit | Stage            | Meaning                                                                                                        |
+| ---- | ---------------- | -------------------------------------------------------------------------------------------------------------- |
+| 0    | accepted         | Validated import; no security judgment                                                                         |
+| 2    | usage            | Invalid options, missing tenant/file, invalid tenant, unsupported kind/operation                               |
+| 3    | json or contract | Invalid encoding/JSON, excessive nesting, duplicate keys, schema/version mismatch, or linked invariant failure |
+| 4    | file             | Unavailable/nonregular file, unsupported path, size limit, or observed file change                             |
+| 1    | internal         | Unexpected implementation failure                                                                              |
 
 Contract failures use `invalid-contract` plus a sorted, deduplicated `issueCodes` list (at most 20 entries), and `issueCodeCount` before truncation. Codes distinguish tenant mismatch, duplicates, scope conflicts, and structural errors. They omit untrusted field names, paths, values, parser messages, and filesystem details. Usage failures point to `--help`.
 

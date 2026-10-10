@@ -2,7 +2,7 @@
 
 ## Project state
 
-Petty has the repository foundation, versioned data contracts, and synthetic scenario datasets; tenant collection and security checks are not implemented yet. The accepted base architecture is TypeScript on Node.js LTS, packaged with Docker; Docker Compose is the initial self-hosted target, and Azure Container Apps/Jobs are the later managed target.
+Petty has the repository foundation, versioned data contracts, synthetic scenario datasets, and tenant-bound offline import; live tenant collection and security checks are not implemented yet. The accepted base architecture is TypeScript on Node.js LTS, packaged with Docker; Docker Compose is the initial self-hosted target, and Azure Container Apps/Jobs are the later managed target.
 
 The source-code license is MIT. Tooling is pinned in package.json, package-lock.json, and .node-version; see docs/DEVELOPMENT.md and ADR 0003. Database, API/UI framework, and AI provider remain open. Do not treat examples from conversation or proposed architecture as accepted implementation choices.
 

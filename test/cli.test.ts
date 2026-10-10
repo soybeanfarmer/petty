@@ -29,7 +29,7 @@ test("compiled CLI help runs without credentials and outside the checkout", () =
 test("no arguments show help instead of attempting collection", () => {
   const result = run([]);
   assert.equal(result.status, 0);
-  assert.match(result.stdout, /Repository foundation only/);
+  assert.match(result.stdout, /Offline fixture import only/);
 });
 
 test("version uses repository package metadata from outside the checkout", () => {
@@ -46,7 +46,7 @@ test("unsupported operations fail with an actionable usage error", () => {
   const result = run(["scan"]);
   assert.equal(result.status, 2);
   assert.equal(result.stdout, "");
-  assert.match(result.stderr, /Unsupported arguments: "scan"/);
+  assert.match(result.stderr, /unsupported-operation/);
   assert.match(result.stderr, /--help/);
 });
 
